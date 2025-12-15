@@ -8,7 +8,6 @@ public class Attackmanager : NetworkBehaviour
     [Header("Setup")]
     public GameObject[] weaponPrefabs; 
     public Transform handHolder;
-    public Renderer handMeshRenderer;
 
     [Header("Input")]
     private GameControls controls; 
@@ -34,7 +33,7 @@ public class Attackmanager : NetworkBehaviour
     void Update()
     {
         if (!IsOwner) return;
-
+        
         if (controls.Gameplay.SummonWeapon.triggered)
         {
             bool shouldEquip = currentWeaponObject == null;
@@ -43,6 +42,7 @@ public class Attackmanager : NetworkBehaviour
 
         if (currentWeaponScript != null)
         {
+            if (controls.Gameplay.Attack1.triggered || controls.Gameplay.Attack2.triggered || controls.Gameplay.Attack3.triggered) currentWeaponScript.setstatsweapon( 5f, 1f, 10f, 50f);
             if (controls.Gameplay.Attack1.triggered) currentWeaponScript.Attack1();
             if (controls.Gameplay.Attack2.triggered) currentWeaponScript.Attack2();
             if (controls.Gameplay.Attack3.triggered) currentWeaponScript.Attack3();
@@ -72,14 +72,14 @@ public class Attackmanager : NetworkBehaviour
             // --- MODUS: WAFFE ---
             
             // A. Hand unsichtbar machen (damit es aussieht, als wurde sie zum Schwert)
-            if (handMeshRenderer != null) handMeshRenderer.enabled = false;
+            
 
             // B. Schwert spawnen (Lokal)
             GameObject newWeapon = Instantiate(weaponPrefabs[weaponIndex], handHolder);
             
             // C. Position resetten (damit es im Griff sitzt)
             newWeapon.transform.localPosition = Vector3.zero;
-            newWeapon.transform.localRotation = Quaternion.identity;
+            //newWeapon.transform.localRotation = Quaternion.identity;
 
             // D. Referenzen speichern
             currentWeaponObject = newWeapon;
@@ -87,10 +87,7 @@ public class Attackmanager : NetworkBehaviour
         }
         else
         {
-            // --- MODUS: LEERE HAND ---
-            
-            // Hand wieder sichtbar machen
-            if (handMeshRenderer != null) handMeshRenderer.enabled = true;
+            Debug.Log("Hand wird sichtbar (keine Waffe).");
         }
     }
 }

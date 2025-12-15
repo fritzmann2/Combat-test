@@ -11,8 +11,17 @@ public enum AttackType
     Slash,
     Charge
 }
-abstract class Weapon : NetworkBehaviour
+
+public enum WeaponType
 {
+    Sword,
+    Bow,
+    Staff
+}
+
+abstract public class Weapon : NetworkBehaviour
+{
+    public WeaponType Type { get; set; }
     public Animator anim;
     public float weapondamage { get; set; }
     public float attacktypemultiplier { get; set; }
@@ -35,9 +44,8 @@ abstract class Weapon : NetworkBehaviour
         bx = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
     }
-    public void setstatsweapon(float weapondmg, float str, float atkspeed, float critchc, float critdmg)
+    public void setstatsweapon(float str, float atkspeed, float critchc, float critdmg)
     {
-        weapondamage = weapondmg;
         strength = str;
         attackSpeed = atkspeed;
         critChance = critchc;
@@ -94,7 +102,7 @@ abstract class Weapon : NetworkBehaviour
     }
 }
 
-class Sword : Weapon
+public class Sword : Weapon
 {
     override public void Attack1()
     {
@@ -114,6 +122,7 @@ class Sword : Weapon
 
     protected override void Awake()
     {
+        Type = WeaponType.Sword;
         base.Awake();
         weapondamage = 10f;
         strength = 5f;

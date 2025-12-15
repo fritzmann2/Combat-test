@@ -379,9 +379,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   ShowTopMostFoldoutHeaderGroup: 1
-  weaponPrefabs: []
-  handHolder: {fileID: 0}
-  handMeshRenderer: {fileID: 0}
+  weaponPrefabs:
+  - {fileID: 6313268473118203971, guid: a7f482c264bff334d9b8b99f6962690e, type: 3}
+  handHolder: {fileID: 187793913136513897}
 --- !u!1 &4283935385468404535
 GameObject:
   m_ObjectHideFlags: 0
