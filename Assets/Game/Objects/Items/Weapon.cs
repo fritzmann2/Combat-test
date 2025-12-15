@@ -41,12 +41,14 @@ abstract public class Weapon : NetworkBehaviour
     {}
     virtual public void Attack3()
     {}
-
+    //Komponenten setzen
     protected virtual void Awake()
     {
         bx = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
     }
+
+    //Waffenstats setzen
     public void setstatsweapon(float str, float atkspeed, float critchc, float critdmg)
     {
         strength = str;
@@ -54,6 +56,7 @@ abstract public class Weapon : NetworkBehaviour
         critChance = critchc;
         critDamage = critdmg;
     }
+    //Angriff ausführen
     public bool performattack(AttackType attacktype)
     {        
         if(anim != null)
@@ -70,6 +73,7 @@ abstract public class Weapon : NetworkBehaviour
             return false;
         }
     }
+    //Hitbox aktivieren/deaktivieren
     public void EnableHitbox()
     {
         if (bx != null) bx.enabled = true;
@@ -94,6 +98,7 @@ abstract public class Weapon : NetworkBehaviour
         }
         
     }
+    //Schaden bei anderem zufügen
     public void DealotherDamage(Collider2D other)
     {
         BaseMobClass mob = other.GetComponent<BaseMobClass>();
@@ -104,6 +109,7 @@ abstract public class Weapon : NetworkBehaviour
         float roll = Random.Range(0f, 100f);
         return (roll <= critChance) ? 1 : 0;
     }
+    //Animationlänge ermitteln
     public float GetAnimationLength()
     {
         if (anim == null || anim.runtimeAnimatorController == null) return 0f;

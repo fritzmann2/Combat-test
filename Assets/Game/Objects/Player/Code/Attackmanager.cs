@@ -33,13 +33,13 @@ public class Attackmanager : NetworkBehaviour
     void Update()
     { 
         if (!IsOwner) return;
-        
+        // Waffe ausrüsten/ablegen
         if (controls.Gameplay.SummonWeapon.triggered)
         {
             bool shouldEquip = currentWeaponObject == null;
             EquipRequestServerRpc(shouldEquip ? 0 : -1); 
         }
-
+        // Angriffe ausführen und abfrage welche
         if (currentWeaponScript != null)
         {
             if (controls.Gameplay.Attack1.triggered || controls.Gameplay.Attack2.triggered || controls.Gameplay.Attack3.triggered) 
@@ -57,12 +57,14 @@ public class Attackmanager : NetworkBehaviour
         }
     }
     [ServerRpc]
+    //Server sagen das eine Waffe ausgerüstet/abgelegt werden soll
     private void EquipRequestServerRpc(int weaponIndex)
     {
         EquipClientRpc(weaponIndex);
     }
 
     [ClientRpc]
+    //Waffe ausrüsten/ablegen auf allen Clients
     private void EquipClientRpc(int weaponIndex)
     {
         if (currentWeaponObject != null)
@@ -74,6 +76,7 @@ public class Attackmanager : NetworkBehaviour
 
         if (weaponIndex >= 0)
         {
+            //Waffe spawnen
             GameObject newWeapon = Instantiate(weaponPrefabs, handHolder);
             
             newWeapon.transform.localPosition = Vector3.zero;

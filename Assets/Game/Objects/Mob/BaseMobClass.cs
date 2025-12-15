@@ -12,12 +12,15 @@ abstract class BaseMobClass : NetworkBehaviour
     public float strength { get; set; }
     public float defense { get; set; }
     public float spellresistance { get; set; }
+
+    // Schaden nehmen
     public bool TakeDamage(float damage)
     {
         Debug.Log("Mob took " + damage + " damage.");
         AmIDead();
         return true;
     }
+    //Todesabfrage
     public void AmIDead()
     {
         if(health <= 0)

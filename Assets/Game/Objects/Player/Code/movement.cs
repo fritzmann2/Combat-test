@@ -201,6 +201,7 @@ public class movement : NetworkBehaviour
         rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
 
+    //sprung
     private void Jump()
     {
         if (didjump && !controls.Gameplay.jump.IsPressed())
@@ -208,6 +209,7 @@ public class movement : NetworkBehaviour
             didjump = false;
             return;
         }
+        //jump abfrage
         if (controls.Gameplay.jump.IsPressed() && jumptimer < 0f)
         {
             jumptimer = 0.1f;
@@ -226,8 +228,10 @@ public class movement : NetworkBehaviour
             rb.AddForce(Vector2.up * jumpHoldForce, ForceMode2D.Force);
         }
     }
+    // Abfrage welchen sprung ausführen
     private void dojump()
     {
+        //normales springen
         if (jumpcount >= 1 && (offgroundpuffer >= 0f || !isWallSliding) || isSliding && !controls.Gameplay.slide.IsPressed())
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * moveSpeed);
@@ -236,6 +240,7 @@ public class movement : NetworkBehaviour
             jumpcount--;
             didjump = true;
         }
+        //Slide jump
         else if (isSliding && jumpcount >= 1 && controls.Gameplay.slide.IsPressed())
             {
                 rb.linearVelocity = Vector2.zero;
@@ -243,10 +248,12 @@ public class movement : NetworkBehaviour
                 rb.linearVelocity = new Vector2(jumpForce * moveSpeed * 1.5f, rb.linearVelocity.y);
             jumpcount--;
             }
+        //Wall jump
         else if (!isGrounded && isWallSliding && didjump == false)
         {
             wallJump();
         }
+        //Dash jump
         else if (dashjumpcount >= 1 && !isWallSliding && didjump == false)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * moveSpeed);
@@ -255,6 +262,7 @@ public class movement : NetworkBehaviour
             dashjumpcount--;
         }
     }
+    //Dash
     public void Dash()
     {
         if (dashtimer < dashcooldown - 0.4f && dashtimer > 0f)
@@ -262,6 +270,7 @@ public class movement : NetworkBehaviour
             groundDeceleration = basedeceleration;
         }
         
+        //Dash abfrage
         if (controls.Gameplay.dash.IsPressed() && wasonground == true)
         {
             wasonground = false;
@@ -284,6 +293,7 @@ public class movement : NetworkBehaviour
             dashtimer -= Time.fixedDeltaTime;
         }
     }
+    // Slide
     public void Slide()
     {
         if (isSliding && controls.Gameplay.slide.IsPressed())
@@ -297,6 +307,7 @@ public class movement : NetworkBehaviour
     }
 
 
+    //Collision test
     private void collidetest()
     {
         isGrounded = (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0f, groundLayer) || Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0f, slideLayer)) ? true : false;
@@ -318,6 +329,8 @@ public class movement : NetworkBehaviour
             offgroundpuffer = 0.1f;
         }
     }
+
+    // Wall Slide
     private void wallSlide()
     {
         if (isTouchingWall && !isGrounded)
@@ -330,6 +343,7 @@ public class movement : NetworkBehaviour
             isWallSliding = false;
         }
     }
+    // Wall Jump ausführen
     private void wallJump()
     {
         didjump = true;
@@ -339,6 +353,7 @@ public class movement : NetworkBehaviour
             jumpcount--;
         Flip();
     }
+    // Zeichnen von hitboxen
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -347,6 +362,7 @@ public class movement : NetworkBehaviour
         Gizmos.color = Color.blue;
         if (wallCheckPos != null) Gizmos.DrawWireCube(wallCheckPos.position, new Vector2(0.2f, 1f));
     }
+    // Spieler umdrehen
     private void Flip()
     {
         LooksRight = !LooksRight;
