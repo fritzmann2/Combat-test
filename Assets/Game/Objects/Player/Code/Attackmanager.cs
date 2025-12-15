@@ -6,15 +6,15 @@ using Unity.Netcode;
 public class Attackmanager : NetworkBehaviour
 {
     [Header("Setup")]
-    public GameObject[] weaponPrefabs; 
+    public GameObject weaponPrefabs; 
     public Transform handHolder;
 
     [Header("Input")]
     private GameControls controls; 
 
-    // Interner Status
     private GameObject currentWeaponObject;
     private Weapon currentWeaponScript;
+    private float animtime;
 
     void Awake()
     {
@@ -31,7 +31,7 @@ public class Attackmanager : NetworkBehaviour
         if (IsOwner) controls.Disable();
     }
     void Update()
-    {
+    { 
         if (!IsOwner) return;
         
         if (controls.Gameplay.SummonWeapon.triggered)
@@ -42,23 +42,29 @@ public class Attackmanager : NetworkBehaviour
 
         if (currentWeaponScript != null)
         {
-            if (controls.Gameplay.Attack1.triggered || controls.Gameplay.Attack2.triggered || controls.Gameplay.Attack3.triggered) currentWeaponScript.setstatsweapon( 5f, 1f, 10f, 50f);
+            if (controls.Gameplay.Attack1.triggered || controls.Gameplay.Attack2.triggered || controls.Gameplay.Attack3.triggered) 
+            {
+                currentWeaponScript.setstatsweapon( 5f, 1f, 10f, 50f);
+            }
             if (controls.Gameplay.Attack1.triggered) currentWeaponScript.Attack1();
             if (controls.Gameplay.Attack2.triggered) currentWeaponScript.Attack2();
             if (controls.Gameplay.Attack3.triggered) currentWeaponScript.Attack3();
+            if (controls.Gameplay.Attack1.triggered || controls.Gameplay.Attack2.triggered || controls.Gameplay.Attack3.triggered) 
+            {
+               animtime = currentWeaponScript.GetAnimationLength();
+               Debug.Log("Animation time: " + animtime);
+            }
         }
     }
     [ServerRpc]
     private void EquipRequestServerRpc(int weaponIndex)
     {
-        // Der Server sagt allen Clients: "Ändert die Waffe!"
         EquipClientRpc(weaponIndex);
     }
 
     [ClientRpc]
     private void EquipClientRpc(int weaponIndex)
     {
-        // 1. Aufräumen: Altes Schwert löschen
         if (currentWeaponObject != null)
         {
             Destroy(currentWeaponObject);
@@ -66,22 +72,12 @@ public class Attackmanager : NetworkBehaviour
             currentWeaponScript = null;
         }
 
-        // 2. Entscheiden: Waffe anlegen oder Hand zeigen?
-        if (weaponIndex >= 0 && weaponIndex < weaponPrefabs.Length)
+        if (weaponIndex >= 0)
         {
-            // --- MODUS: WAFFE ---
+            GameObject newWeapon = Instantiate(weaponPrefabs, handHolder);
             
-            // A. Hand unsichtbar machen (damit es aussieht, als wurde sie zum Schwert)
-            
-
-            // B. Schwert spawnen (Lokal)
-            GameObject newWeapon = Instantiate(weaponPrefabs[weaponIndex], handHolder);
-            
-            // C. Position resetten (damit es im Griff sitzt)
             newWeapon.transform.localPosition = Vector3.zero;
-            //newWeapon.transform.localRotation = Quaternion.identity;
 
-            // D. Referenzen speichern
             currentWeaponObject = newWeapon;
             currentWeaponScript = newWeapon.GetComponent<Weapon>();
         }

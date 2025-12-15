@@ -9,7 +9,8 @@ public enum AttackType
 {
     Stab,   
     Slash,
-    Charge
+    Charge,
+    NormalShot
 }
 
 public enum WeaponType
@@ -31,6 +32,7 @@ abstract public class Weapon : NetworkBehaviour
     public float critChance { get; set; }
     public float critDamage { get; set; }
     public Collider2D bx;
+    private AttackType attacktype;
  
     virtual public void Attack1()
     {}
@@ -54,7 +56,8 @@ abstract public class Weapon : NetworkBehaviour
     public bool performattack(AttackType attacktype)
     {        
         if(anim != null)
-        {
+        {   
+            this.attacktype = attacktype;
             int crit = IsCrit();
             damage = (weapondamage + 0.1f * strength) * (1 + critDamage * 0.01f * crit) * attacktypemultiplier;
             anim.SetTrigger(attacktype.ToString());
@@ -100,6 +103,20 @@ abstract public class Weapon : NetworkBehaviour
         float roll = Random.Range(0f, 100f);
         return (roll <= critChance) ? 1 : 0;
     }
+    public float GetAnimationLength()
+    {
+        if (anim == null || anim.runtimeAnimatorController == null) return 0f;
+
+        foreach (AnimationClip clip in anim.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == attacktype.ToString())
+            {
+                return clip.length;
+            }
+        }
+        Debug.LogWarning("Animation nicht gefunden: " + attacktype.ToString());
+        return 0f;
+    }
 }
 
 public class Sword : Weapon
@@ -126,5 +143,32 @@ public class Sword : Weapon
         base.Awake();
         weapondamage = 10f;
         strength = 5f;
+    }
+}
+
+public class Bow : Weapon
+{
+    override public void Attack1()
+    {
+        attacktypemultiplier = 1f;
+        performattack(AttackType.NormalShot);
+    }
+    override public void Attack2()
+    {
+        attacktypemultiplier = 0.9f;
+        performattack(AttackType.Stab);
+    }
+    override public void Attack3()
+    {
+        attacktypemultiplier = 2f;
+        performattack(AttackType.Charge);
+    }
+
+    protected override void Awake()
+    {
+        Type = WeaponType.Bow;
+        base.Awake();
+        weapondamage = 8f;
+        strength = 3f;
     }
 }

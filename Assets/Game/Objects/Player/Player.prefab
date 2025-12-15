@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1561542812
+  GlobalObjectIdHash: 951506825
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -363,9 +363,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   ShowTopMostFoldoutHeaderGroup: 1
-  inventory:
-  - {fileID: 6313268473118203971, guid: a7f482c264bff334d9b8b99f6962690e, type: 3}
-  Handpoint: {fileID: 7952286107311454798}
 --- !u!114 &5279757702115889303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,8 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   ShowTopMostFoldoutHeaderGroup: 1
-  weaponPrefabs:
-  - {fileID: 6313268473118203971, guid: a7f482c264bff334d9b8b99f6962690e, type: 3}
+  weaponPrefabs: {fileID: 6313268473118203971, guid: a7f482c264bff334d9b8b99f6962690e, type: 3}
   handHolder: {fileID: 187793913136513897}
 --- !u!1 &4283935385468404535
 GameObject:

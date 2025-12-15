@@ -13,4 +13,12 @@ public class swordscript : Sword
     {
 
     }    
+    public void startstab()
+    {
+        
+    }
+    public void endcharge()
+    {
+
+    }
 }
