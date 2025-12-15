@@ -10,7 +10,8 @@ public enum AttackType
     Stab,   
     Slash,
     Charge,
-    NormalShot
+    normal_shot,
+    bow_uppercut
 }
 
 public enum WeaponType
@@ -151,12 +152,12 @@ public class Bow : Weapon
     override public void Attack1()
     {
         attacktypemultiplier = 1f;
-        performattack(AttackType.NormalShot);
+        performattack(AttackType.normal_shot);
     }
     override public void Attack2()
     {
         attacktypemultiplier = 0.9f;
-        performattack(AttackType.Stab);
+        performattack(AttackType.bow_uppercut);
     }
     override public void Attack3()
     {
