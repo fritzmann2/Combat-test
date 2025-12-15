@@ -90,12 +90,12 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     ""maps"": [
         {
             ""name"": ""Gameplay"",
-            ""id"": ""aa4973c8-7861-40c6-b8d3-ea521eb614bc"",
+            ""id"": ""9e95475f-b93d-4df4-9fb3-7419f99e75b6"",
             ""actions"": [
                 {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
-                    ""id"": ""6df47f1b-66b2-489c-9390-cb2de642a9df"",
+                    ""id"": ""55adf26c-e0b8-4f2a-a88c-a713ccf33393"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -104,7 +104,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""jump"",
                     ""type"": ""Button"",
-                    ""id"": ""ea940d76-981b-4097-94b5-8f4677ebd3f3"",
+                    ""id"": ""eabfc0a4-4776-4a9d-b011-1ebc15151760"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -113,7 +113,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""dash"",
                     ""type"": ""Button"",
-                    ""id"": ""c223f808-5898-4346-ace5-2b80fa0acd53"",
+                    ""id"": ""ccb08052-c8ff-496a-bd62-ee4e83610407"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -122,7 +122,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""slide"",
                     ""type"": ""Button"",
-                    ""id"": ""ef9d122d-1d01-4f9b-a19d-4147b5718133"",
+                    ""id"": ""23ae3832-b334-4489-9e3a-6c409c4d78e5"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -131,7 +131,16 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""escape"",
                     ""type"": ""Button"",
-                    ""id"": ""7f05f623-0889-496e-a293-35280a48c047"",
+                    ""id"": ""eff646b1-1c56-46bf-8039-64da49a419ea"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""4635b868-2e03-48cb-b808-d50061806dc1"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -141,7 +150,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""4269ef6c-68df-4ac9-8c8d-bc6a1799c892"",
+                    ""id"": ""b323196e-dea5-42ab-a84a-36af46f3abd3"",
                     ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
@@ -152,7 +161,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""2D Vector"",
-                    ""id"": ""8679e628-452e-4d91-bae3-2e3872c626db"",
+                    ""id"": ""b789286e-7df0-45f5-80c2-19bf8cf33f9e"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -163,7 +172,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""97c1ab5f-20a3-418e-8297-1b01d1be304c"",
+                    ""id"": ""8731b7a7-a5bf-4033-8a74-4f2e216dc916"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -174,7 +183,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""b2ef7ee6-8c8e-4359-9843-5a138e55ba73"",
+                    ""id"": ""98d66a59-a4bd-4d0a-9ec0-bda73426879b"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -185,7 +194,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""dd7f69fa-a8ca-4bbb-a225-4f46a7dbb184"",
+                    ""id"": ""fb5737df-6def-41a1-b40e-75ae4e6289c7"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -196,7 +205,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""c4f4ae86-48f7-4ddf-abb5-585e2f25f7d9"",
+                    ""id"": ""db0f270b-8fc1-450d-b1c1-6a50bcb7da01"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -207,7 +216,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e2cc1687-ea6a-48c4-910f-91595470d1b2"",
+                    ""id"": ""d9b50371-4508-4333-bede-d8cefe8063b7"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -218,7 +227,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""52b11dcf-66b2-4949-8d19-0621d7e02d20"",
+                    ""id"": ""192d8997-c309-4965-b2f3-d23327a5f330"",
                     ""path"": ""<Keyboard>/v"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -229,7 +238,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""09fb8b03-7943-4fb9-8a19-05b811a02279"",
+                    ""id"": ""f12e75f6-fd60-419a-91d6-954194635702"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -240,12 +249,45 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""972006e9-ee31-40aa-9f04-ce05601d38a3"",
+                    ""id"": ""eb5850c1-702b-4608-a4dd-b08e31155dc5"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e74a7907-251d-477f-b56b-01b7c7e6a2aa"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42ba60b8-c05d-4d88-b9e3-960251311915"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2963ae84-7647-42ca-a0fa-2e4351ddaf33"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -261,6 +303,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         m_Gameplay_dash = m_Gameplay.FindAction("dash", throwIfNotFound: true);
         m_Gameplay_slide = m_Gameplay.FindAction("slide", throwIfNotFound: true);
         m_Gameplay_escape = m_Gameplay.FindAction("escape", throwIfNotFound: true);
+        m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
     }
 
     ~@GameControls()
@@ -346,6 +389,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_dash;
     private readonly InputAction m_Gameplay_slide;
     private readonly InputAction m_Gameplay_escape;
+    private readonly InputAction m_Gameplay_Attack;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -377,6 +421,10 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/escape".
         /// </summary>
         public InputAction @escape => m_Wrapper.m_Gameplay_escape;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Attack".
+        /// </summary>
+        public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -418,6 +466,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @escape.started += instance.OnEscape;
             @escape.performed += instance.OnEscape;
             @escape.canceled += instance.OnEscape;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         /// <summary>
@@ -444,6 +495,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @escape.started -= instance.OnEscape;
             @escape.performed -= instance.OnEscape;
             @escape.canceled -= instance.OnEscape;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         /// <summary>
@@ -519,5 +573,12 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEscape(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttack(InputAction.CallbackContext context);
     }
 }
