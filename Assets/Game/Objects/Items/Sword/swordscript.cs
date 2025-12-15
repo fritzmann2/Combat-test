@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
+using Unity.Netcode;
 
-public class swordscript : MonoBehaviour
+public class swordscript : NetworkBehaviour
 {
 
     private GameControls controls;
@@ -14,18 +16,25 @@ public class swordscript : MonoBehaviour
         bx = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
     }
-    void OnEnable()
+    public override void OnNetworkSpawn()
     {
-        controls.Enable();
+        if (IsOwner)
+        {
+            controls.Enable();
+        }
     }
 
-    void OnDisable()
+    public override void OnNetworkDespawn()
     {
-        controls.Disable();
+        if (IsOwner)
+        {
+            controls.Disable();
+        }
     }
 
     void FixedUpdate()
     {
+        if (!IsOwner) return;
         Attackinput();
     }
 
@@ -33,16 +42,37 @@ public class swordscript : MonoBehaviour
     {
         if (controls.Gameplay.Attack.triggered)
         {
-            attack(controls.Gameplay.Attack.ReadValue<int>());
+            int attackValue = (int)controls.Gameplay.Attack.ReadValue<float>(); 
+            
+            if (attackValue > 0)
+            {
+                RequestAttackServerRpc(attackValue);
+            }
         }
     }
-    public bool attack(int attacktype)
+
+    [ServerRpc]
+    private void RequestAttackServerRpc(int attackType)
     {
-        if (attacktype == 1)
+        PlayAttackClientRpc(attackType);
+    }
+
+    [ClientRpc]
+    private void PlayAttackClientRpc(int attackType)
+    {
+        if (attackType == 1)
         {
-            Debug.Log("Stabattack");
-            anim.SetTrigger("Slash");
+            Debug.Log("Attack 2: Slice");
+            anim.SetTrigger("Slice");
         }
-        return true;
+        else if (attackType == 2)
+        {
+            Debug.Log("Attack 1: Stab");
+            anim.SetTrigger("Stab"); 
+        }
+        else if (attackType == 3)
+        {
+            Debug.Log("Attack 3: Charge");
+        }
     }
 }

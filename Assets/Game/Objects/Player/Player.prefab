@@ -361,6 +361,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e5569cfdf5e094188156b7e9de866c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  ShowTopMostFoldoutHeaderGroup: 1
+  inventory:
+  - {fileID: 6313268473118203971, guid: a7f482c264bff334d9b8b99f6962690e, type: 3}
+  Handpoint: {fileID: 7952286107311454798}
 --- !u!1 &4283935385468404535
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,5 +433,5 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.5, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
