@@ -119,4 +119,3 @@ class Sword : Weapon
         strength = 5f;
     }
 }
-

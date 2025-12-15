@@ -138,15 +138,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Attack"",
-                    ""type"": ""Button"",
-                    ""id"": ""4635b868-2e03-48cb-b808-d50061806dc1"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""OpenInventory"",
                     ""type"": ""Button"",
                     ""id"": ""b8658397-89a3-491b-986f-feb2cc269adf"",
@@ -159,6 +150,33 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""name"": ""SummonWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""2290870e-b877-4288-8a65-84b7e069cbf4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack1"",
+                    ""type"": ""Button"",
+                    ""id"": ""4635b868-2e03-48cb-b808-d50061806dc1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack2"",
+                    ""type"": ""Button"",
+                    ""id"": ""41caf45f-8b18-493b-ab49-02b7aeac0856"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack3"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6ab7e11-c557-4e02-8c7c-7917c63bf1a2"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -283,29 +301,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""42ba60b8-c05d-4d88-b9e3-960251311915"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2963ae84-7647-42ca-a0fa-2e4351ddaf33"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -330,6 +326,28 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""action"": ""SummonWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""152b6c2c-0535-40bb-8e15-3e7d05ed3c97"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""138816d1-4270-4861-8656-e6e2956f79d7"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -343,9 +361,11 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         m_Gameplay_dash = m_Gameplay.FindAction("dash", throwIfNotFound: true);
         m_Gameplay_slide = m_Gameplay.FindAction("slide", throwIfNotFound: true);
         m_Gameplay_escape = m_Gameplay.FindAction("escape", throwIfNotFound: true);
-        m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay_OpenInventory = m_Gameplay.FindAction("OpenInventory", throwIfNotFound: true);
         m_Gameplay_SummonWeapon = m_Gameplay.FindAction("SummonWeapon", throwIfNotFound: true);
+        m_Gameplay_Attack1 = m_Gameplay.FindAction("Attack1", throwIfNotFound: true);
+        m_Gameplay_Attack2 = m_Gameplay.FindAction("Attack2", throwIfNotFound: true);
+        m_Gameplay_Attack3 = m_Gameplay.FindAction("Attack3", throwIfNotFound: true);
     }
 
     ~@GameControls()
@@ -431,9 +451,11 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_dash;
     private readonly InputAction m_Gameplay_slide;
     private readonly InputAction m_Gameplay_escape;
-    private readonly InputAction m_Gameplay_Attack;
     private readonly InputAction m_Gameplay_OpenInventory;
     private readonly InputAction m_Gameplay_SummonWeapon;
+    private readonly InputAction m_Gameplay_Attack1;
+    private readonly InputAction m_Gameplay_Attack2;
+    private readonly InputAction m_Gameplay_Attack3;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -466,10 +488,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @escape => m_Wrapper.m_Gameplay_escape;
         /// <summary>
-        /// Provides access to the underlying input action "Gameplay/Attack".
-        /// </summary>
-        public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
-        /// <summary>
         /// Provides access to the underlying input action "Gameplay/OpenInventory".
         /// </summary>
         public InputAction @OpenInventory => m_Wrapper.m_Gameplay_OpenInventory;
@@ -477,6 +495,18 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/SummonWeapon".
         /// </summary>
         public InputAction @SummonWeapon => m_Wrapper.m_Gameplay_SummonWeapon;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Attack1".
+        /// </summary>
+        public InputAction @Attack1 => m_Wrapper.m_Gameplay_Attack1;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Attack2".
+        /// </summary>
+        public InputAction @Attack2 => m_Wrapper.m_Gameplay_Attack2;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Attack3".
+        /// </summary>
+        public InputAction @Attack3 => m_Wrapper.m_Gameplay_Attack3;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -518,15 +548,21 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @escape.started += instance.OnEscape;
             @escape.performed += instance.OnEscape;
             @escape.canceled += instance.OnEscape;
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
             @OpenInventory.started += instance.OnOpenInventory;
             @OpenInventory.performed += instance.OnOpenInventory;
             @OpenInventory.canceled += instance.OnOpenInventory;
             @SummonWeapon.started += instance.OnSummonWeapon;
             @SummonWeapon.performed += instance.OnSummonWeapon;
             @SummonWeapon.canceled += instance.OnSummonWeapon;
+            @Attack1.started += instance.OnAttack1;
+            @Attack1.performed += instance.OnAttack1;
+            @Attack1.canceled += instance.OnAttack1;
+            @Attack2.started += instance.OnAttack2;
+            @Attack2.performed += instance.OnAttack2;
+            @Attack2.canceled += instance.OnAttack2;
+            @Attack3.started += instance.OnAttack3;
+            @Attack3.performed += instance.OnAttack3;
+            @Attack3.canceled += instance.OnAttack3;
         }
 
         /// <summary>
@@ -553,15 +589,21 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @escape.started -= instance.OnEscape;
             @escape.performed -= instance.OnEscape;
             @escape.canceled -= instance.OnEscape;
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
             @OpenInventory.started -= instance.OnOpenInventory;
             @OpenInventory.performed -= instance.OnOpenInventory;
             @OpenInventory.canceled -= instance.OnOpenInventory;
             @SummonWeapon.started -= instance.OnSummonWeapon;
             @SummonWeapon.performed -= instance.OnSummonWeapon;
             @SummonWeapon.canceled -= instance.OnSummonWeapon;
+            @Attack1.started -= instance.OnAttack1;
+            @Attack1.performed -= instance.OnAttack1;
+            @Attack1.canceled -= instance.OnAttack1;
+            @Attack2.started -= instance.OnAttack2;
+            @Attack2.performed -= instance.OnAttack2;
+            @Attack2.canceled -= instance.OnAttack2;
+            @Attack3.started -= instance.OnAttack3;
+            @Attack3.performed -= instance.OnAttack3;
+            @Attack3.canceled -= instance.OnAttack3;
         }
 
         /// <summary>
@@ -638,13 +680,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEscape(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAttack(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "OpenInventory" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -658,5 +693,26 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSummonWeapon(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Attack1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttack1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Attack2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttack2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Attack3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttack3(InputAction.CallbackContext context);
     }
 }
