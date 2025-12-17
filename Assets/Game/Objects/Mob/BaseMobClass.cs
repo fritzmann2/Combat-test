@@ -26,13 +26,11 @@ abstract public class BaseEntety : NetworkBehaviour
         if (!IsSpawned) 
         {
             Debug.LogWarning("Map-Objekt ist noch nicht gespawnt! (Warte auf Sync)");
-            return;
         }
-        TakeDamageServerRpc((int)damage);
+        TakeDamageServer((int)damage);
     }
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    public void TakeDamageServerRpc(int damage)
+    public void TakeDamageServer(int damage)
     {
         Debug.Log("Mob took " + damage + " damage.");
         health.Value -= damage;
@@ -46,9 +44,10 @@ abstract public class BaseEntety : NetworkBehaviour
         {
             Debug.Log("Mob is dead.");
         }
-        if (this.tag == "Entety")
+        if (this.tag == "mob")
         {
-            GetComponent<NetworkObject>().Despawn();
+            Debug.LogError("Mob tries dieing");
+            Destroy(gameObject);
         }
     }
 }

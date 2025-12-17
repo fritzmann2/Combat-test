@@ -9,7 +9,6 @@ using UnityEngine;
 
 public class RelayManager : MonoBehaviour
 {
-    // Singleton, damit wir von überall darauf zugreifen können
     public static RelayManager Instance { get; private set; }
 
     private void Awake()

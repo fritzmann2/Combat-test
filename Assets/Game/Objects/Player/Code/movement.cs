@@ -311,7 +311,7 @@ public class movement : NetworkBehaviour
     private void collidetest()
     {
         isGrounded = (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0f, groundLayer) || Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0f, slideLayer)) ? true : false;
-        isTouchingWall = Physics2D.OverlapBox(wallCheckPos.position, new Vector2(0.2f, 1f), 0f, wallLayer);
+        isTouchingWall = Physics2D.OverlapBox(wallCheckPos.position, new Vector2(1.1f, 0.9f), 0f, wallLayer);
         isSliding = (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0f, slideLayer) && !Physics2D.OverlapBox(wallCheckPos.position, new Vector2(0.2f, 1f), 0f, slideLayer)) ? true : false;
         
         if (!isGrounded)
@@ -360,7 +360,7 @@ public class movement : NetworkBehaviour
         if (groundCheckPos != null) Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
         
         Gizmos.color = Color.blue;
-        if (wallCheckPos != null) Gizmos.DrawWireCube(wallCheckPos.position, new Vector2(0.2f, 1f));
+        if (wallCheckPos != null) Gizmos.DrawWireCube(wallCheckPos.position, new Vector2(1.1f, 0.9f));
     }
     // Spieler umdrehen
     private void Flip()
