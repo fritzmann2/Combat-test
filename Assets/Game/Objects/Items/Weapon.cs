@@ -21,7 +21,7 @@ public enum WeaponType
     Staff
 }
 
-abstract public class Weapon : NetworkBehaviour
+abstract public class Weapon : MonoBehaviour
 {
     public WeaponType Type { get; set; }
     public Animator anim;
@@ -41,6 +41,9 @@ abstract public class Weapon : NetworkBehaviour
     {}
     virtual public void Attack3()
     {}
+    virtual public void Attack4()
+    {}
+
     //Komponenten setzen
     protected virtual void Awake()
     {
@@ -101,7 +104,7 @@ abstract public class Weapon : NetworkBehaviour
     //Schaden bei anderem zufügen
     public void DealotherDamage(Collider2D other)
     {
-        BaseMobClass mob = other.GetComponent<BaseMobClass>();
+        BaseEntety mob = other.GetComponent<BaseEntety>();
         mob.TakeDamage(damage);
     }
     private int IsCrit()
@@ -141,6 +144,11 @@ public class Sword : Weapon
     override public void Attack3()
     {
         attacktypemultiplier = 2f;
+        performattack(AttackType.Charge);
+    }
+    override public void Attack4()
+    {
+        attacktypemultiplier = 0;
         performattack(AttackType.Charge);
     }
 

@@ -5,6 +5,10 @@ using Unity.Netcode;
 
 public class swordscript : Sword
 {
+    public void endattack()
+    {
+
+    }
     public void startslash()
     {
         
@@ -15,7 +19,7 @@ public class swordscript : Sword
     }    
     public void startstab()
     {
-        
+
     }
     public void endcharge()
     {

@@ -181,6 +181,15 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack4"",
+                    ""type"": ""Button"",
+                    ""id"": ""4369d19f-b74d-4244-a19e-dc1da42ed910"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -307,6 +316,17 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""0bd171b8-be92-4f92-91a1-ddfa061ec63e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""669957cf-e6a0-483c-8c40-ebcaf20862f3"",
                     ""path"": ""<Keyboard>/i"",
                     ""interactions"": """",
@@ -340,12 +360,56 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e0ef1c6d-5959-43e5-8dce-8428d2879605"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""138816d1-4270-4861-8656-e6e2956f79d7"",
                     ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Attack3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e16d637f-4625-4174-b950-bacf53e4bbc5"",
+                    ""path"": ""<Mouse>/forwardButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""01bfd84a-620a-4c88-88d0-6dd5469cb7d7"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0885243-0759-4115-8c49-0faa27cad01f"",
+                    ""path"": ""<Mouse>/forwardButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -366,6 +430,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         m_Gameplay_Attack1 = m_Gameplay.FindAction("Attack1", throwIfNotFound: true);
         m_Gameplay_Attack2 = m_Gameplay.FindAction("Attack2", throwIfNotFound: true);
         m_Gameplay_Attack3 = m_Gameplay.FindAction("Attack3", throwIfNotFound: true);
+        m_Gameplay_Attack4 = m_Gameplay.FindAction("Attack4", throwIfNotFound: true);
     }
 
     ~@GameControls()
@@ -456,6 +521,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Attack1;
     private readonly InputAction m_Gameplay_Attack2;
     private readonly InputAction m_Gameplay_Attack3;
+    private readonly InputAction m_Gameplay_Attack4;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -507,6 +573,10 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/Attack3".
         /// </summary>
         public InputAction @Attack3 => m_Wrapper.m_Gameplay_Attack3;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Attack4".
+        /// </summary>
+        public InputAction @Attack4 => m_Wrapper.m_Gameplay_Attack4;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -563,6 +633,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @Attack3.started += instance.OnAttack3;
             @Attack3.performed += instance.OnAttack3;
             @Attack3.canceled += instance.OnAttack3;
+            @Attack4.started += instance.OnAttack4;
+            @Attack4.performed += instance.OnAttack4;
+            @Attack4.canceled += instance.OnAttack4;
         }
 
         /// <summary>
@@ -604,6 +677,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @Attack3.started -= instance.OnAttack3;
             @Attack3.performed -= instance.OnAttack3;
             @Attack3.canceled -= instance.OnAttack3;
+            @Attack4.started -= instance.OnAttack4;
+            @Attack4.performed -= instance.OnAttack4;
+            @Attack4.canceled -= instance.OnAttack4;
         }
 
         /// <summary>
@@ -714,5 +790,12 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttack3(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Attack4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttack4(InputAction.CallbackContext context);
     }
 }
