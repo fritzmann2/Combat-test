@@ -3,7 +3,11 @@ using UnityEngine;
 
 abstract public class BaseEntety : NetworkBehaviour
 {
-    public NetworkVariable<float> health = new NetworkVariable<float>();
+    public NetworkVariable<float> health = new NetworkVariable<float>(
+        100f, 
+        NetworkVariableReadPermission.Everyone, 
+        NetworkVariableWritePermission.Server
+    );
 
     public int maxHealth;
     public BoxCollider2D bx;
@@ -29,29 +33,29 @@ abstract public class BaseEntety : NetworkBehaviour
             return;
         }
 
-        // 2. Check: Ist DIESES Map-Objekt schon synchronisiert?
         if (!IsSpawned) 
         {
             Debug.LogWarning("Map-Objekt ist noch nicht gespawnt! (Warte auf Sync)");
         }
-        TakeDamageServer((int)damage);
+        TakeDamageServerRpc((int)damage);
     }
 
-    public void TakeDamageServer(int damage)
+    [Rpc(SendTo.Server)]
+    public void TakeDamageServerRpc(int damage)
     {
         Debug.Log("Mob took " + damage + " damage.");
         health.Value -= damage;
         Debug.Log(health + " HP remains");
     }
     //Todesabfrage
-    public void OnHealthChanged(float previousValue, float newValue)
+    virtual public void OnHealthChanged(float previousValue, float newValue)
     {
         if(newValue <= 0)
         {
             Debug.Log("Mob is dead.");
             if (this.tag == "mob")
             {
-                Debug.LogError("Mob tries dieing");
+//                Debug.LogError("Mob tries dieing");
                 Destroy(gameObject);
             }
         }

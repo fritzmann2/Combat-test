@@ -93,7 +93,7 @@ public class movement : NetworkBehaviour
         yield return new WaitUntil(() => IsSpawned);
 
         if (!IsOwner) yield break;
-        Debug.Log("Ich bin der Owner dieses Spielers, verbinde die Kamera...");
+//        Debug.Log("Ich bin der Owner dieses Spielers, verbinde die Kamera...");
         while (Camera.main == null || Camera.main.GetComponent<CameraFollow>() == null)
         {
             Debug.Log("Warte auf Kamera...");
@@ -102,13 +102,13 @@ public class movement : NetworkBehaviour
 
         Camera.main.GetComponent<CameraFollow>().target = transform;
         
-        Debug.Log("Kamera erfolgreich im Start verbunden!");
+//        Debug.Log("Kamera erfolgreich im Start verbunden!");
     }
     
     public override void OnNetworkSpawn()
     {
         // Nur loggen, nichts Gefährliches tun!
-        Debug.Log($"Spawn Start Owner: {IsOwner}");
+        // Debug.Log($"Spawn Start Owner: {IsOwner}");
         base.OnNetworkSpawn();
     }
 
@@ -119,7 +119,7 @@ public class movement : NetworkBehaviour
         controls = new GameControls();
         groundDeceleration = basedeceleration;
         jumpHoldForce = jumpForce * 30f;
-        Debug.LogError("PLAYER AWAKE: Ich versuche zu existieren!");
+       // Debug.LogError("PLAYER AWAKE: Ich versuche zu existieren!");
     }
     void OnEnable()
     {

@@ -164,7 +164,7 @@ public class WorldGenerator : NetworkBehaviour
             Transform position = spawnPoint.transform;
             GameObject dummyobj = Instantiate(dummy, position);
             var netObj = dummyobj.GetComponent<NetworkObject>();
-            if (!netObj)
+            if (netObj != null)
             {
                 netObj.Spawn();
             }

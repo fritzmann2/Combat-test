@@ -35,12 +35,16 @@ abstract public class Weapon : MonoBehaviour
     public Collider2D bx;
     private AttackType attacktype;
  
+    [Rpc(SendTo.Server)]
     virtual public void Attack1()
     {}
+    [Rpc(SendTo.Server)]
     virtual public void Attack2()
     {}
+    [Rpc(SendTo.Server)]
     virtual public void Attack3()
     {}
+    [Rpc(SendTo.Server)]
     virtual public void Attack4()
     {}
 
@@ -88,23 +92,24 @@ abstract public class Weapon : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+        BaseEntety mob = other.GetComponent<BaseEntety>();
+
         if(other.CompareTag("Player"))
         {
-            DealotherDamage(other);
+            DealotherDamage(mob);
             Debug.Log("Hit Player");
 
         }
         if (other.CompareTag("mob"))
         {
-            DealotherDamage(other);
+            DealotherDamage(mob);
             Debug.Log("Hit Mob");
         }
         
     }
     //Schaden bei anderem zufügen
-    public void DealotherDamage(Collider2D other)
+    public void DealotherDamage(BaseEntety mob)
     {
-        BaseEntety mob = other.GetComponent<BaseEntety>();
         mob.TakeDamage(damage);
     }
     private int IsCrit()
