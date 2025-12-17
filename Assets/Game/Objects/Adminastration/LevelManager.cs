@@ -70,4 +70,5 @@ public class LevelManager : NetworkBehaviour
 
         playerInstance.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
     }
+    
 }

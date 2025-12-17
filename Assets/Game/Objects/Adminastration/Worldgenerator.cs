@@ -6,6 +6,7 @@ public class WorldGenerator : NetworkBehaviour
 {
     [Header("Alle Prefabs hier reinziehen")]
     public GameObject[] allMapChunks; // <-- WICHTIG: Die müssen im Inspector hier drin sein!
+    public GameObject dummy;
 
     [Header("Settings")]
     public int chunkSize = 50;
@@ -136,6 +137,7 @@ public class WorldGenerator : NetworkBehaviour
         }
 
         activeChunks.Add(coord, newChunk);
+        SpawnMobsInChunk(newChunk);
     }
 
     void RemoveChunk(Vector2Int coord)
@@ -149,6 +151,23 @@ public class WorldGenerator : NetworkBehaviour
                 Destroy(chunkObj);
             }
             activeChunks.Remove(coord);
+        }
+    }
+
+// Neue Hilfsfunktion
+    void SpawnMobsInChunk(GameObject chunk)
+    {
+        // Sucht alle MobSpawnPoint-Skripte, die Kinder von diesem Chunk sind
+        MobSpawnPoint[] spawnPoints = chunk.GetComponentsInChildren<MobSpawnPoint>();
+        foreach (MobSpawnPoint spawnPoint in spawnPoints)
+        {
+            Transform position = spawnPoint.transform;
+            GameObject dummyobj = Instantiate(dummy, position);
+            var netObj = dummyobj.GetComponent<NetworkObject>();
+            if (!netObj)
+            {
+                netObj.Spawn();
+            }
         }
     }
 }

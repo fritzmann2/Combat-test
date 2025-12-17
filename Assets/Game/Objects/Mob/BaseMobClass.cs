@@ -11,6 +11,13 @@ abstract public class BaseEntety : NetworkBehaviour
     virtual public void Awake()
     {
         bx = GetComponent<BoxCollider2D>();
+        health.OnValueChanged += OnHealthChanged;
+
+        // Startwerte setzen (nur Server)
+        if (IsServer)
+        {
+            health.Value = maxHealth;
+        }
     }
     // Schaden nehmen
     public virtual void TakeDamage(float damage)
@@ -34,20 +41,19 @@ abstract public class BaseEntety : NetworkBehaviour
     {
         Debug.Log("Mob took " + damage + " damage.");
         health.Value -= damage;
-        AmIDead();
         Debug.Log(health + " HP remains");
     }
     //Todesabfrage
-    public void AmIDead()
+    public void OnHealthChanged(float previousValue, float newValue)
     {
-        if(health.Value <= 0)
+        if(newValue <= 0)
         {
             Debug.Log("Mob is dead.");
-        }
-        if (this.tag == "mob")
-        {
-            Debug.LogError("Mob tries dieing");
-            Destroy(gameObject);
+            if (this.tag == "mob")
+            {
+                Debug.LogError("Mob tries dieing");
+                Destroy(gameObject);
+            }
         }
     }
 }
