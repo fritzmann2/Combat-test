@@ -21,7 +21,7 @@ public enum WeaponType
     Staff
 }
 
-abstract public class Weapon : MonoBehaviour
+abstract public class Weapon : NetworkBehaviour
 {
     public WeaponType Type { get; set; }
     public Animator anim;
@@ -35,16 +35,12 @@ abstract public class Weapon : MonoBehaviour
     public Collider2D bx;
     private AttackType attacktype;
  
-    [Rpc(SendTo.Server)]
     virtual public void Attack1()
     {}
-    [Rpc(SendTo.Server)]
     virtual public void Attack2()
     {}
-    [Rpc(SendTo.Server)]
     virtual public void Attack3()
     {}
-    [Rpc(SendTo.Server)]
     virtual public void Attack4()
     {}
 
@@ -64,22 +60,25 @@ abstract public class Weapon : MonoBehaviour
         critDamage = critdmg;
     }
     //Angriff ausführen
-    public bool performattack(AttackType attacktype)
+    public void performattack(AttackType attacktype)
     {        
         if(anim != null)
         {   
             this.attacktype = attacktype;
             int crit = IsCrit();
             damage = (weapondamage + 0.1f * strength) * (1 + critDamage * 0.01f * crit) * attacktypemultiplier;
-            anim.SetTrigger(attacktype.ToString());
+            PlayAnimation(attacktype);
             Debug.Log("Sword Slash executed.");
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
+    public void PlayAnimation(AttackType attacktype)
+    {
+        if (anim != null)
+        {
+            anim.SetTrigger(attacktype.ToString());
+        }
+    }
+    
     //Hitbox aktivieren/deaktivieren
     public void EnableHitbox()
     {
