@@ -60,13 +60,6 @@ public class Attackmanager : NetworkBehaviour
     //Server sagen das eine Waffe ausgerüstet/abgelegt werden soll
     private void EquipRequestServerRpc(int weaponIndex)
     {
-        EquipClientRpc(weaponIndex);
-    }
-
-    [ClientRpc]
-    //Waffe ausrüsten/ablegen auf allen Clients
-    private void EquipClientRpc(int weaponIndex)
-    {
         if (currentWeaponObject != null)
         {
             Destroy(currentWeaponObject);
@@ -78,15 +71,33 @@ public class Attackmanager : NetworkBehaviour
         {
             //Waffe spawnen
             GameObject newWeapon = Instantiate(weaponPrefabs, handHolder);
-            
-            newWeapon.transform.localPosition = Vector3.zero;
+            var netObj = newWeapon.GetComponent<NetworkObject>();
+            netObj.Spawn();
+            netObj.TrySetParent(this.NetworkObject);
+            netObj.transform.localPosition = handHolder.localPosition;
 
-            currentWeaponObject = newWeapon;
-            currentWeaponScript = newWeapon.GetComponent<Weapon>();
+
+            currentWeaponObject = netObj.gameObject;
+            currentWeaponScript = netObj.GetComponent<Weapon>();
+            EquipClientRpc(netObj.NetworkObjectId);
+
         }
         else
         {
             Debug.Log("Hand wird sichtbar (keine Waffe).");
         }
+
     }
+
+    [ClientRpc]
+    private void EquipClientRpc(ulong weaponNetworkId)
+    {
+        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(weaponNetworkId, out NetworkObject weaponNetObj))
+        {            
+            currentWeaponObject = weaponNetObj.gameObject;
+            currentWeaponScript = weaponNetObj.GetComponent<Weapon>();
+            currentWeaponScript.SetFollowTarget(this.handHolder);
+        }
+    }
+
 }

@@ -52,8 +52,8 @@ GameObject:
   - component: {fileID: 3391998883803777491}
   - component: {fileID: 2196424085680107788}
   - component: {fileID: -5597445049921152597}
-  - component: {fileID: 6174633509350434674}
   - component: {fileID: 5279757702115889303}
+  - component: {fileID: 2009028433561660836}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -350,19 +350,6 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
---- !u!114 &6174633509350434674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2567050193010641777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1e5569cfdf5e094188156b7e9de866c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &5279757702115889303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,6 +365,21 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   weaponPrefabs: {fileID: 6313268473118203971, guid: a7f482c264bff334d9b8b99f6962690e, type: 3}
   handHolder: {fileID: 187793913136513897}
+--- !u!114 &2009028433561660836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2567050193010641777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b41fe0a73c67b5f41a30173fd3626e33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryHolder
+  inventorySize: 10
+  inventorySystem:
+    inventorySlots: []
 --- !u!1 &4283935385468404535
 GameObject:
   m_ObjectHideFlags: 0

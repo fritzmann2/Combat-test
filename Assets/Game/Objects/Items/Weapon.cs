@@ -1,8 +1,5 @@
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.InputSystem;
 using Unity.Netcode;
-using Unity.VisualScripting;
 
 
 public enum AttackType
@@ -19,9 +16,18 @@ public enum WeaponType
     Sword,
     Bow,
     Staff
+}   
+
+public enum Itemtype
+{
+    Weapon,
+    Armor
+
 }
 
-abstract public class Weapon : NetworkBehaviour
+
+
+abstract public class Weapon : InventoryItem
 {
     public WeaponType Type { get; set; }
     public Animator anim;
@@ -34,6 +40,7 @@ abstract public class Weapon : NetworkBehaviour
     public float critDamage { get; set; }
     public Collider2D bx;
     private AttackType attacktype;
+    private Transform visualTarget;
  
     virtual public void Attack1()
     {}
@@ -45,11 +52,13 @@ abstract public class Weapon : NetworkBehaviour
     {}
 
     //Komponenten setzen
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         bx = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
     }
+    
 
     //Waffenstats setzen
     public void setstatsweapon(float str, float atkspeed, float critchc, float critdmg)
@@ -67,11 +76,12 @@ abstract public class Weapon : NetworkBehaviour
             this.attacktype = attacktype;
             int crit = IsCrit();
             damage = (weapondamage + 0.1f * strength) * (1 + critDamage * 0.01f * crit) * attacktypemultiplier;
-            PlayAnimation(attacktype);
+            PlayAnimationClientsAndHostRpc(attacktype);
             Debug.Log("Sword Slash executed.");
         }
     }
-    public void PlayAnimation(AttackType attacktype)
+    [Rpc(SendTo.ClientsAndHost)]
+    public void PlayAnimationClientsAndHostRpc(AttackType attacktype)
     {
         if (anim != null)
         {
@@ -131,6 +141,18 @@ abstract public class Weapon : NetworkBehaviour
         Debug.LogWarning("Animation nicht gefunden: " + attacktype.ToString());
         return 0f;
     }
+    public void SetFollowTarget(Transform target)
+    {
+        visualTarget = target;
+    }
+
+    protected virtual void LateUpdate()
+    {
+        if (visualTarget != null)
+        {
+            transform.position = visualTarget.position;
+        }
+    }
 }
 
 public class Sword : Weapon
@@ -139,6 +161,7 @@ public class Sword : Weapon
     {
         attacktypemultiplier = 1f;
         performattack(AttackType.Slash);
+        Debug.Log("Sword Slash");
     }
     override public void Attack2()
     {
@@ -163,6 +186,7 @@ public class Sword : Weapon
         weapondamage = 10f;
         strength = 5f;
     }
+    
 }
 
 public class Bow : Weapon

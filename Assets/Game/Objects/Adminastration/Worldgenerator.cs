@@ -7,6 +7,8 @@ public class WorldGenerator : NetworkBehaviour
     [Header("Alle Prefabs hier reinziehen")]
     public GameObject[] allMapChunks; // <-- WICHTIG: Die müssen im Inspector hier drin sein!
     public GameObject dummy;
+    public GameObject PickUpItem;
+
 
     [Header("Settings")]
     public int chunkSize = 50;
@@ -163,11 +165,25 @@ public class WorldGenerator : NetworkBehaviour
         {
             Transform position = spawnPoint.transform;
             GameObject dummyobj = Instantiate(dummy, position);
+            dummyobj.GetComponent<dummyscript>().Setparrent(this);
             var netObj = dummyobj.GetComponent<NetworkObject>();
             if (netObj != null)
             {
                 netObj.Spawn();
+                
             }
         }
+    }
+    public void SpawnPickUpItem(string id, Transform transform)
+    {
+        GameObject pickupitem = Instantiate(PickUpItem, transform);
+        pickupitem.name = id;
+        var netObj = pickupitem.GetComponent<NetworkObject>();
+        if (netObj != null)
+        {
+            netObj.Spawn();
+        }
+
+        
     }
 }
