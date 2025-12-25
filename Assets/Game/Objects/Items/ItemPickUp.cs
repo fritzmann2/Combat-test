@@ -13,17 +13,18 @@ public class ItemPickUp : NetworkBehaviour
     {
         bx = GetComponent<BoxCollider2D>();
         bx.isTrigger = true;
-        bx.edgeRadius = PickUpRadius;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         var inventory = other.gameObject.GetComponent<InventoryHolder>();
-        if  (!inventory) return;
+        if  (!inventory)
+        {
+            return;
+        }    
         
         if (inventory.InventorySystem.AddToInventory(ItemData, 1))
         {
-            Debug.Log("Item added to inventory");
             DestroythisServerRpc();
         }    
     }
