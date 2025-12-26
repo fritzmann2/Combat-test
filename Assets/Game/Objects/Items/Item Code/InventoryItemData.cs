@@ -10,4 +10,5 @@ public class InventoryItemData : ScriptableObject
     public Itemtype Type;
     public bool IsStackable;
     public int MaxStackSize;
+    public GameObject itemObject;
 }

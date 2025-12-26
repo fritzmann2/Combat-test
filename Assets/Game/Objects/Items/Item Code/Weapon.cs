@@ -77,7 +77,6 @@ abstract public class Weapon : InventoryItem
             int crit = IsCrit();
             damage = (weapondamage + 0.1f * strength) * (1 + critDamage * 0.01f * crit) * attacktypemultiplier;
             PlayAnimationClientsAndHostRpc(attacktype);
-            Debug.Log("Sword Slash executed.");
         }
     }
     [Rpc(SendTo.ClientsAndHost)]
@@ -161,7 +160,6 @@ public class Sword : Weapon
     {
         attacktypemultiplier = 1f;
         performattack(AttackType.Slash);
-        Debug.Log("Sword Slash");
     }
     override public void Attack2()
     {

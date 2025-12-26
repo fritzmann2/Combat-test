@@ -24,7 +24,41 @@ public class InventorySystem
 
     public bool AddToInventory(InventoryItemData itemToAdd, int amount)
     {
-        inventorySlots[0] = new InventorySlot(itemToAdd,amount);
-        return true;
+        // Guckt nach ob das item im inventar existiert
+        if (ContainsItem(itemToAdd, out List<InventorySlot> invSlot)) 
+        {
+            Debug.Log("try to add to existing slot");
+            foreach (var slot in invSlot)
+            {
+                if (slot.RoomLeftInStack(amount))
+                {
+                    slot.addToStack(amount);
+                    OnInventorySlotChanged?.Invoke(slot);
+                    return true;
+                }
+            }
+        }
+        //Holt den ersten verfügbaren slot
+        if (HasFreeSlot(out InventorySlot freeSlot))
+        {
+            Debug.Log("try to add to free slot");
+            freeSlot.UpdateInventorySlot(itemToAdd, amount);
+            OnInventorySlotChanged?.Invoke(freeSlot);
+            return true;
+        }
+        return false;
+    }
+
+    public bool ContainsItem(InventoryItemData itemToAdd, out List<InventorySlot> invSlot)
+    {
+        invSlot = InventorySlots.Where(i => i.ItemData == itemToAdd).ToList();
+
+        return invSlot.Count > 0;
+    }
+
+    public bool HasFreeSlot(out InventorySlot freeSlot)
+    {
+        freeSlot = InventorySlots.FirstOrDefault(i => i.ItemData == null);
+        return freeSlot != null;
     }
 }

@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02b420f61f598c444897c2f19d3480cf, type: 3}
-  m_Name: Testitem1
+  m_Name: Sword
   m_EditorClassIdentifier: Assembly-CSharp::InventoryItemData
-  ID: 
-  ItemName: Testitem1
+  ID: Sword
+  ItemName: Sword
   Icon: {fileID: 0}
   Type: 0
   IsStackable: 0
-  MaxStackSize: 0
+  MaxStackSize: 1
+  itemObject: {fileID: 6313268473118203971, guid: a7f482c264bff334d9b8b99f6962690e, type: 3}
