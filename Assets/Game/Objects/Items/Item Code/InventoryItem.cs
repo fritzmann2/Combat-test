@@ -1,29 +1,48 @@
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections.Generic;
 
 
-
-
-abstract public class InventoryItem : NetworkBehaviour
+public class InventoryItem : NetworkBehaviour
 {
     public InventoryItemData itemData;
-    public string Name { get; set;}
-    public Itemtype ItemType{ get; set;}
-    public string itemID { get; set;}
-    public Sprite basesprite;
-    public bool isStackable { get; set;}
+    public List<ItemParameter> itemstats;
     protected virtual void Awake()
     {
-        //setupData();
+        if (itemstats == null) itemstats = new List<ItemParameter>();
     }
-    /*
-    virtual public void setupData()
-    {
-        Name = itemData.ItemName;
-        ItemType = itemData.Type;
-        itemID = itemData.ID;
-        basesprite = itemData.Icon;
-        isStackable = itemData.IsStackable;
+    public void Initialize(string _id, List<ItemParameter> _stats)
+    {        
+        if (itemData != null)
+        {
+            itemData.ID = _id;
+        }
+        else
+        {
+            Debug.LogError("ItemData ist im Inspector nicht zugewiesen!");
+        }
+        if (_stats != null)
+        {
+            itemstats = new List<ItemParameter>(_stats);
+        }
+        else
+        {
+            itemstats = new List<ItemParameter>();
+        }
     }
-    */
 }
+
+[System.Serializable]
+public class InventoryItemInstance
+{
+    public InventoryItemData itemData;      // Der unveränderliche Bauplan
+    public List<ItemParameter> stats;   // Die veränderlichen Werte
+
+    // Konstruktor für ein neues Item
+    public InventoryItemInstance(InventoryItemData _data)
+    {
+        itemData = _data;
+        stats = new List<ItemParameter>();
+    }
+}
+

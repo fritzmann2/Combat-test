@@ -5,10 +5,26 @@ public class StaticInventoryDisplay : InventoryDisplay
 {
     private InventoryHolder inventoryHolder; 
     [SerializeField] private InventorySlots_UI[] slots;
+    [SerializeField] protected int offset = 0;
+    private bool wasactiveonce = false;
 
     protected override void Start()
     {
         base.Start();
+    }
+    private void Awake()
+    {
+        if(wasactiveonce == false)
+        {
+            if (inventoryHolder != null)
+            {
+                inventorySystem = inventoryHolder.InventorySystem;
+                AssignSlot(inventorySystem);
+                
+                Debug.Log("Inventar beim öffnen geladen.");
+                //wasactiveonce = true;
+            }
+        }
     }
 
     public void ConnectToPlayer(InventoryHolder playerHolder)
@@ -32,13 +48,26 @@ public class StaticInventoryDisplay : InventoryDisplay
     {
         slotDictionary = new Dictionary<InventorySlots_UI, InventorySlot>();
 
-        if (slots.Length != inventorySystem.InventorySize) 
-            Debug.Log($"Inventory slots out of sync on {this.gameObject}");
-        
-        for (int i = 0; i < inventorySystem.InventorySize; i++)
+        if (slots.Length + offset > inventorySystem.InventorySize) 
         {
-            slotDictionary.Add(slots[i], inventorySystem.InventorySlots[i]);
-            slots[i].Init(inventorySystem.InventorySlots[i]);
+            Debug.LogError($"Inventory Display Error auf {gameObject.name}: UI benötigt Index bis {slots.Length + offset}, aber System hat nur {inventorySystem.InventorySize} Slots!");
+            return; 
+        }
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            int systemIndex = i + offset;
+
+            InventorySlot slotToDisplay = inventorySystem.InventorySlots[systemIndex];
+
+            // Dictionary füllen
+            if (!slotDictionary.ContainsKey(slots[i]))
+            {
+                slotDictionary.Add(slots[i], slotToDisplay);
+            }
+            
+            // UI Slot initialisieren
+            slots[i].Init(slotToDisplay);
         }
     }
 }

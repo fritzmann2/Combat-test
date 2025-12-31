@@ -326,7 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::bowscript
   ShowTopMostFoldoutHeaderGroup: 1
   itemData: {fileID: 0}
-  basesprite: {fileID: 0}
+  itemstats: []
   anim: {fileID: 0}
   bx: {fileID: 0}
 --- !u!1 &6457280025995956875

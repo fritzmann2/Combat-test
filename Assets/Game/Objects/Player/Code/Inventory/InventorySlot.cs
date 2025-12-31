@@ -5,14 +5,15 @@ using System.Collections.Generic;
 [System.Serializable]
 public class InventorySlot
 {
-    [SerializeField] private InventoryItemData itemData;
+    [SerializeField] private InventoryItemInstance inventoryItemInstance;
     [SerializeField] private int stacksize;
-    public InventoryItemData ItemData => itemData;
+    public InventoryItemInstance InventoryItemInstance => inventoryItemInstance;
+    
     public int StackSize => stacksize;
 
-    public InventorySlot (InventoryItemData source, int amount)
+    public InventorySlot (InventoryItemInstance source, int amount)
     {
-        itemData = source;
+        inventoryItemInstance = source;
         stacksize = amount;
     }
     public InventorySlot ()
@@ -21,23 +22,23 @@ public class InventorySlot
     }
     public void clearSlot()
     {
-        itemData = null;
+        inventoryItemInstance = null;
         stacksize = -1;
     }
 
-    public void UpdateInventorySlot(InventoryItemData data, int amount)
+    public void UpdateInventorySlot(InventoryItemInstance data, int amount)
     {
-        itemData = data;
+        inventoryItemInstance = data;
         stacksize = amount;
     }
     public bool RoomLeftInStack(int ammountToAdd, out int ammountRemaining)
     {
-        ammountRemaining = itemData.MaxStackSize - stacksize;
+        ammountRemaining = inventoryItemInstance.itemData.MaxStackSize - stacksize;
         return RoomLeftInStack(ammountToAdd);
     }
     public bool RoomLeftInStack(int ammountToAdd)
     {
-        if (stacksize + ammountToAdd <= itemData.MaxStackSize) return true;
+        if (stacksize + ammountToAdd <= inventoryItemInstance.itemData.MaxStackSize) return true;
         else return false;
     }
     public void addToStack(int amount)

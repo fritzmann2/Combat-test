@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   ShowTopMostFoldoutHeaderGroup: 1
   itemData: {fileID: 0}
-  basesprite: {fileID: 0}
+  itemstats: []
   anim: {fileID: 0}
   bx: {fileID: 0}
 --- !u!61 &202891770665367839

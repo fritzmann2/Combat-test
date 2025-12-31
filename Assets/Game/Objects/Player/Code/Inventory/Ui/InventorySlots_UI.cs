@@ -33,12 +33,29 @@ public class InventorySlots_UI : MonoBehaviour
 
     public void UpdateUISlot(InventorySlot slot)
     {
-        if (slot.ItemData != null)
+        if (slot == null)
         {
-            itemSprite.sprite = slot.ItemData.Icon;
+            Debug.Log("Slot ist null");
+        }
+        if (slot.InventoryItemInstance == null)
+        {
+            Debug.Log("InventoryItemInstance ist null");
+            ClearSlot();
+            return;
+        }
+        if (slot.InventoryItemInstance.itemData == null)
+        {
+            Debug.Log("InventoryItemData ist null");
+        }
+        
+        Debug.Log("Update Slot");
+        if (slot.InventoryItemInstance.itemData != null)
+        {
+            itemSprite.sprite = slot.InventoryItemInstance.itemData.Icon;
             itemSprite.color = Color.white;
             if (slot.StackSize > 1) itemCount.text = slot.StackSize.ToString();
             else itemCount.text = "";
+            Debug.Log("item slot set");
         }
 
         else
@@ -49,12 +66,12 @@ public class InventorySlots_UI : MonoBehaviour
 
     public void UpdateUISlot()
     {
-        if (assignedInventorySlot.ItemData != null) UpdateUISlot(assignedInventorySlot);
+        if (assignedInventorySlot.InventoryItemInstance.itemData != null) UpdateUISlot(assignedInventorySlot);
     }
 
     public void ClearSlot()
     {
-        assignedInventorySlot?.clearSlot();
+        //assignedInventorySlot?.clearSlot();
         itemSprite.sprite = null;
         itemSprite.color = Color.clear;
         itemCount.text = "";

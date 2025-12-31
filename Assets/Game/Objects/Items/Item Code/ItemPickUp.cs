@@ -21,8 +21,9 @@ public class ItemPickUp : NetworkBehaviour
         var holder = other.GetComponent<InventoryHolder>();
         
         if (holder != null)
-        {
-            holder.AddItemRequest(ItemData.ID, amount);
+        {   
+            int itemRarity = 1;
+            holder.AddItemRequest(ItemData.ID, amount, itemRarity);
 
             // Pickup entfernen
             GetComponent<NetworkObject>().Despawn();

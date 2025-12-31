@@ -7,7 +7,7 @@ using System.Linq;
 public class InventorySystem 
 {
     [SerializeField] private List<InventorySlot> inventorySlots;
-    public List <InventorySlot> InventorySlots => inventorySlots;
+    public List<InventorySlot> InventorySlots => inventorySlots;
     public int InventorySize => InventorySlots.Count;
     public UnityAction<InventorySlot> OnInventorySlotChanged;
 
@@ -22,7 +22,7 @@ public class InventorySystem
         }
     }
 
-    public bool AddToInventory(InventoryItemData itemToAdd, int amount)
+    public bool AddToInventory(InventoryItemInstance itemToAdd, int amount)
     {
         // Guckt nach ob das item im inventar existiert
         if (ContainsItem(itemToAdd, out List<InventorySlot> invSlot)) 
@@ -49,16 +49,16 @@ public class InventorySystem
         return false;
     }
 
-    public bool ContainsItem(InventoryItemData itemToAdd, out List<InventorySlot> invSlot)
+    public bool ContainsItem(InventoryItemInstance itemToAdd, out List<InventorySlot> invSlot)
     {
-        invSlot = InventorySlots.Where(i => i.ItemData == itemToAdd).ToList();
+        invSlot = InventorySlots.Where(i => i.InventoryItemInstance == itemToAdd).ToList();
 
         return invSlot.Count > 0;
     }
 
     public bool HasFreeSlot(out InventorySlot freeSlot)
     {
-        freeSlot = InventorySlots.FirstOrDefault(i => i.ItemData == null);
+        freeSlot = InventorySlots.FirstOrDefault(i => i.InventoryItemInstance == null);
         return freeSlot != null;
     }
 }
