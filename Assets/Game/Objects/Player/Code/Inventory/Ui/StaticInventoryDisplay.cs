@@ -12,7 +12,7 @@ public class StaticInventoryDisplay : InventoryDisplay
     {
         base.Start();
     }
-    private void Awake()
+    private void OnEnable()
     {
         if(wasactiveonce == false)
         {
@@ -22,7 +22,7 @@ public class StaticInventoryDisplay : InventoryDisplay
                 AssignSlot(inventorySystem);
                 
                 Debug.Log("Inventar beim öffnen geladen.");
-                //wasactiveonce = true;
+                wasactiveonce = true;
             }
         }
     }

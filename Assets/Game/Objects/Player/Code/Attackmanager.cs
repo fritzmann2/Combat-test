@@ -42,14 +42,15 @@ public class Attackmanager : NetworkBehaviour
         // Angriffe ausführen und abfrage welche
         if (currentWeaponScript != null)
         {
-            if (controls.Gameplay.Attack1.triggered || controls.Gameplay.Attack2.triggered || controls.Gameplay.Attack3.triggered) 
+            if (controls.Gameplay.Attack1.triggered || controls.Gameplay.Attack2.triggered || controls.Gameplay.Attack3.triggered || controls.Gameplay.Attack4.triggered) 
             {
                 currentWeaponScript.setstatsweapon( 5f, 1f, 10f, 50f);
             }
             if (controls.Gameplay.Attack1.triggered) currentWeaponScript.Attack1();
             if (controls.Gameplay.Attack2.triggered) currentWeaponScript.Attack2();
             if (controls.Gameplay.Attack3.triggered) currentWeaponScript.Attack3();
-            if (controls.Gameplay.Attack1.triggered || controls.Gameplay.Attack2.triggered || controls.Gameplay.Attack3.triggered) 
+            if (controls.Gameplay.Attack4.triggered) currentWeaponScript.Attack4();
+            if (controls.Gameplay.Attack1.triggered || controls.Gameplay.Attack2.triggered || controls.Gameplay.Attack3.triggered || controls.Gameplay.Attack4.triggered) 
             {
                animtime = currentWeaponScript.GetAnimationLength();
                Debug.Log("Animation time: " + animtime);

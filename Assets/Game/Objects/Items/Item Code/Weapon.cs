@@ -7,6 +7,7 @@ public enum AttackType
     Stab,   
     Slash,
     Charge,
+    Throw,
     normal_shot,
     bow_uppercut
 }
@@ -41,6 +42,10 @@ abstract public class Weapon : InventoryItem
     public Collider2D bx;
     private AttackType attacktype;
     private Transform visualTarget;
+    public Vector3 animOffset;
+    private GameControls controls;
+    private float moveInput;
+    private float LastmoveInput;
  
     virtual public void Attack1()
     {}
@@ -57,8 +62,18 @@ abstract public class Weapon : InventoryItem
         base.Awake();
         bx = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
+        controls = new GameControls();
     }
     
+    void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    void OnDisable()
+    {
+        controls.Disable();
+    }
 
     //Waffenstats setzen
     public void setstatsweapon(float str, float atkspeed, float critchc, float critdmg)
@@ -147,9 +162,19 @@ abstract public class Weapon : InventoryItem
 
     protected virtual void LateUpdate()
     {
+        Vector2 inputVector = controls.Gameplay.Move.ReadValue<Vector2>();
+        moveInput = inputVector.x;
+        if (moveInput != 0f)
+        {
+            LastmoveInput = moveInput;
+        }
         if (visualTarget != null)
         {
-            transform.position = visualTarget.position;
+            Vector3 handPos = visualTarget.position;
+        
+            Vector3 finalPos = handPos + (visualTarget.rotation * animOffset * LastmoveInput);
+
+            transform.position = finalPos;
         }
     }
 }
@@ -173,8 +198,9 @@ public class Sword : Weapon
     }
     override public void Attack4()
     {
-        attacktypemultiplier = 0;
-        performattack(AttackType.Charge);
+        attacktypemultiplier = 1f;
+        Debug.Log("Throw Attack");
+        performattack(AttackType.Throw);
     }
 
     protected override void Awake()

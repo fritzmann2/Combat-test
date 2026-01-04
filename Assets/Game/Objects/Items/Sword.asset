@@ -17,5 +17,5 @@ MonoBehaviour:
   Icon: {fileID: 831581725337992457, guid: 7fc20efcdc3250d4c82b133ba092596f, type: 3}
   Type: 0
   IsStackable: 0
-  MaxStackSize: 1
+  MaxStackSize: 2
   itemObject: {fileID: 6313268473118203971, guid: a7f482c264bff334d9b8b99f6962690e, type: 3}

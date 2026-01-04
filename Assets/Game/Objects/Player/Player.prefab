@@ -150,18 +150,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1561542812
+  GlobalObjectIdHash: 951506825
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
+  SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
+  SyncOwnerTransformWhenParented: 0
   AllowOwnerToParent: 0
 --- !u!114 &7668092172069583432
 MonoBehaviour:
@@ -384,117 +384,229 @@ MonoBehaviour:
   inventorySize: 56
   inventorySystem:
     inventorySlots:
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
-    - itemData: {fileID: 0}
+    - inventoryItemInstance:
+        itemData: {fileID: 0}
+        stats: []
       stacksize: 0
 --- !u!1 &3843636529787185812
 GameObject:

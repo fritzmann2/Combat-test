@@ -23,7 +23,7 @@ public class NetworkUI : MonoBehaviour
 
     [Header("Client Controls")]
     public TMP_InputField joinCodeInput;
-    public Button submitCodeBtn; // <-- NEU: Der "Beitreten" Knopf neben dem Textfeld!
+    public Button submitCodeBtn; 
     public TextMeshProUGUI statusText;
 
     [Header("Referenzen")]
@@ -33,7 +33,7 @@ public class NetworkUI : MonoBehaviour
 
     void Start()
     {
-        // 1. Grundeinstellungen: Alles verstecken, was nicht sofort da sein soll
+        // Grundeinstellungen: Alles verstecken, was nicht sofort da sein soll
         lobbyPanel.SetActive(false);
         hostArea.SetActive(false);
         clientArea.SetActive(false);
@@ -63,7 +63,7 @@ public class NetworkUI : MonoBehaviour
         // Status Text am Anfang verstecken oder leeren
         if(statusText != null) statusText.text = "";
 
-        // --- CLIENT FLOW (Schritt 1: Menü öffnen) ---
+        // --- CLIENT FLOW
         clientMenuBtn.onClick.AddListener(() => {
             // UI Umschalten
             lobbyPanel.SetActive(true);
@@ -76,7 +76,7 @@ public class NetworkUI : MonoBehaviour
         });
 
         // --- CLIENT FLOW (Schritt 2: Wirklich beitreten) ---
-        submitCodeBtn.onClick.AddListener(async () => { // WICHTIG: 'async' hinzufügen!
+        submitCodeBtn.onClick.AddListener(async () => { 
             string code = joinCodeInput.text;
 
             if (!string.IsNullOrEmpty(code))
@@ -124,7 +124,10 @@ public class NetworkUI : MonoBehaviour
 
         // --- START GAME (Nur Host) ---
         startGameBtn.onClick.AddListener(() => {
-            GameData.PlayerName = playernameInput.text;
+            if (playernameInput != null)
+            {
+                GameData.PlayerName = playernameInput.text;
+            }
             NetworkManager.Singleton.SceneManager.LoadScene(firstlevel, UnityEngine.SceneManagement.LoadSceneMode.Single);
         });
 
