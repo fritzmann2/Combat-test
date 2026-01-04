@@ -107,7 +107,6 @@ public class movement : NetworkBehaviour
     
     public override void OnNetworkSpawn()
     {
-        // Nur loggen, nichts Gefährliches tun!
         // Debug.Log($"Spawn Start Owner: {IsOwner}");
         base.OnNetworkSpawn();
     }
@@ -132,7 +131,6 @@ public class movement : NetworkBehaviour
     }
     
     
-
     void Update()
     {
         if (!IsOwner) return;
@@ -170,7 +168,7 @@ public class movement : NetworkBehaviour
     }
 
 
-
+    //Änderung Blickrichtung
     private void viewdir()
     {
         if (moveInput == -1 && LooksRight)
@@ -182,6 +180,7 @@ public class movement : NetworkBehaviour
             Flip();
         }
     }
+    //Bewegung
     private void Run()
     {
         float targetSpeed = moveInput * moveSpeed;
