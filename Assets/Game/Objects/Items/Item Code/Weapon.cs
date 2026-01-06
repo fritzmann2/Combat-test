@@ -16,13 +16,23 @@ public enum WeaponType
 {
     Sword,
     Bow,
-    Staff
+    Staff, 
+    Non
 }   
+public enum ArmorType
+{
+    Helmet,
+    Chestplate,
+    Leggings,
+    Boots,
+    Non
+}
 
 public enum Itemtype
 {
     Weapon,
-    Armor
+    Armor,
+    Accessory
 
 }
 

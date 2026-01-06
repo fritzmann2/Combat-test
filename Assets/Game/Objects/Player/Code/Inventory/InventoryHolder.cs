@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using System.Linq;
 using System.IO;
-using System.Text;
+
 #if UNITY_EDITOR
 using UnityEditor; 
 #endif
@@ -16,6 +16,7 @@ public class InventoryHolder : NetworkBehaviour
     [SerializeField] private int inventorySize;
     [SerializeField] protected InventorySystem inventorySystem;
     private GameControls controls;
+    private MouseItemData mouseItemData;
     private StaticInventoryDisplayInv inventoryUI;
     private StaticInventoryDisplayHot hotbarUI;
     
@@ -44,6 +45,8 @@ public class InventoryHolder : NetworkBehaviour
             Debug.LogError("Kein StaticInventoryDisplay in der Scene gefunden!");
         }
         if (IsServer) LoadInventory();
+        mouseItemData = FindFirstObjectByType<MouseItemData>(FindObjectsInactive.Include);
+        mouseItemData.ItemChange += HandleSwap;
     }
     public override void OnNetworkDespawn()
     {
@@ -86,7 +89,10 @@ public class InventoryHolder : NetworkBehaviour
         InventoryItemInstance newItemInstance = new InventoryItemInstance(data);
         
         // Optional: Stats hinzufügen (Beispiel)
-        // newItemInstance.stats.Add(new ItemParameter("Durability", 100));
+        if (newItemInstance.itemData.Type.ToString() == "Weapon")
+        {
+            newItemInstance.stats.Add(new ItemParameter("strength", getStatbyrarity(itemRarity)));            
+        }        
 
         // 2. Ins Server-Inventar
         bool success = inventorySystem.AddToInventory(newItemInstance, amount);
@@ -139,9 +145,38 @@ public class InventoryHolder : NetworkBehaviour
         return itemDatabase.FirstOrDefault(x => x.ID == id);
     }
 
-    
+    private int getStatbyrarity(int itemRarity)
+    {
+        switch (itemRarity)
+        {
+            case 0:
+                return Random.Range(1, 6); // Common
+            case 1:
+                return Random.Range(5, 11); // Uncommon
+            case 2:
+                return Random.Range(10, 16); // Rare
+            case 3:
+                return Random.Range(15, 21); // Epic
+            case 4:
+                return Random.Range(20, 26); // Legendary
+            default:
+                return 0; // Invalid rarity
+        }
+    }
  
+    private void HandleSwap(int index1, int index2)
+    {
+        Debug.Log("Swap requested between index " + index1 + " and index " + index2);
+        InventorySlot tempData = inventorySystem.InventorySlots[index1];
+        inventorySystem.InventorySlots[index1] = inventorySystem.InventorySlots[index2];
+        inventorySystem.InventorySlots[index2] = tempData;
 
+        InventorySlot slot1 = inventorySystem.InventorySlots[index1];
+        InventorySlot slot2 = inventorySystem.InventorySlots[index2];
+
+        inventorySystem.OnInventorySlotChanged?.Invoke(slot1);
+        inventorySystem.OnInventorySlotChanged?.Invoke(slot2);
+    }
     // Save System
     public void SaveInventory()
     {

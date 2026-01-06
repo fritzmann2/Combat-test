@@ -37,6 +37,8 @@ public class StaticInventoryDisplay : InventoryDisplay
             
             inventorySystem.OnInventorySlotChanged -= UpdateSlot;
             inventorySystem.OnInventorySlotChanged += UpdateSlot;
+            
+
 
             AssignSlot(inventorySystem);
             
@@ -67,7 +69,8 @@ public class StaticInventoryDisplay : InventoryDisplay
             }
             
             // UI Slot initialisieren
-            slots[i].Init(slotToDisplay);
+            slots[i].Init(slotToDisplay, i);
         }
     }
+    
 }

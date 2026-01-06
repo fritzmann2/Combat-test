@@ -8,6 +8,7 @@ public class InventorySlots_UI : MonoBehaviour
     [SerializeField] private Image itemSprite;
     [SerializeField] private TextMeshProUGUI itemCount;
     [SerializeField] private InventorySlot assignedInventorySlot;
+    private int index {get; set; }
 
     private Button button;
 
@@ -25,9 +26,10 @@ public class InventorySlots_UI : MonoBehaviour
 
     }
 
-    public void Init(InventorySlot slot)
+    public virtual void Init(InventorySlot slot, int index)
     {
         assignedInventorySlot = slot;
+        this.index = index;
         UpdateUISlot(slot);
     }
 
@@ -78,6 +80,6 @@ public class InventorySlots_UI : MonoBehaviour
     }
     public void OnUISlotClick()
     {
-        ParentDisplay?.SlotClicked(this);
+        ParentDisplay?.SlotClicked(this, index);
     }
 }

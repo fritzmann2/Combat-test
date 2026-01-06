@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 abstract public class InventoryDisplay : MonoBehaviour
 {
-    [SerializeField] MouseItemData mouseInventoryItem;
+    [SerializeField] public MouseItemData mouseInventoryItem;
     protected InventorySystem inventorySystem;
     protected Dictionary<InventorySlots_UI, InventorySlot> slotDictionary;
 
@@ -29,8 +27,12 @@ abstract public class InventoryDisplay : MonoBehaviour
         }
     }
 
-    public void SlotClicked(InventorySlots_UI clickedSlot)
+    public void SlotClicked(InventorySlots_UI clickedSlot, int index)
     {
-        Debug.Log("slot clicked");
+        Debug.Log("slot clicked: " + clickedSlot.ToString() + " at index " + index.ToString());
+        if (mouseInventoryItem != null)
+        {
+            mouseInventoryItem.clickedOnInventorySlot(clickedSlot, index);
+        }
     }
 }
