@@ -8,7 +8,6 @@ public class InventorySlots_UI : MonoBehaviour
     [SerializeField] private Image itemSprite;
     [SerializeField] private TextMeshProUGUI itemCount;
     [SerializeField] private InventorySlot assignedInventorySlot;
-    [SerializeField] private bool isEquipmentSlot = false;
     private int index {get; set; }
 
     private Button button;
@@ -23,7 +22,6 @@ public class InventorySlots_UI : MonoBehaviour
         ParentDisplay = transform.parent.GetComponent<InventoryDisplay>();
         if (ParentDisplay == null) 
         {
-            isEquipmentSlot = true;
             ParentDisplay = GetComponentInParent<InventoryParentLink>().inventoryDisplay;
         }
 
@@ -47,7 +45,7 @@ public class InventorySlots_UI : MonoBehaviour
         }
         if (slot.InventoryItemInstance == null)
         {
-            Debug.Log("InventoryItemInstance ist null");
+//            Debug.Log("InventoryItemInstance ist null");
             ClearSlot();
             return;
         }

@@ -41,7 +41,7 @@ public class InventorySystem
         //Holt den ersten verfügbaren slot
         if (HasFreeSlot(out InventorySlot freeSlot))
         {
-            Debug.Log("try to add to free slot");
+//            Debug.Log("try to add to free slot");
             freeSlot.UpdateInventorySlot(itemToAdd, amount);
             OnInventorySlotChanged?.Invoke(freeSlot);
             return true;

@@ -5,7 +5,6 @@ public class StaticInventoryDisplay : InventoryDisplay
 {
     private InventoryHolder inventoryHolder; 
     [SerializeField] private InventorySlots_UI[] slots;
-    [SerializeField] private EquipmentSlot[] equipmentSlots;
     [SerializeField] protected int offset = 0;
     private bool wasactiveonce = false;
 
@@ -22,7 +21,7 @@ public class StaticInventoryDisplay : InventoryDisplay
                 inventorySystem = inventoryHolder.InventorySystem;
                 AssignSlot(inventorySystem);
                 
-//                Debug.Log("Inventar beim öffnen geladen.");
+                Debug.Log("Inventar beim öffnen geladen.");
                 wasactiveonce = true;
             }
         }
@@ -43,7 +42,7 @@ public class StaticInventoryDisplay : InventoryDisplay
 
             AssignSlot(inventorySystem);
             
-            Debug.Log("Inventar erfolgreich mit lokalem Spieler verknüpft.");
+            //Debug.Log("Inventar erfolgreich mit lokalem Spieler verknüpft.");
         }
     }
 
@@ -51,9 +50,9 @@ public class StaticInventoryDisplay : InventoryDisplay
     {
         slotDictionary = new Dictionary<InventorySlots_UI, InventorySlot>();
 
-        if (slots.Length + offset > inventorySystem.InventorySize) 
+        if (slots.Length + offset > invToDisplay.InventorySize) 
         {
-            Debug.LogError($"Inventory Display Error auf {gameObject.name}: UI benötigt Index bis {slots.Length + offset}, aber System hat nur {inventorySystem.InventorySize} Slots!");
+            Debug.LogError($"Inventory Display Error auf {gameObject.name}: UI benötigt Index bis {slots.Length + offset}, aber System hat nur {invToDisplay.InventorySize} Slots!");
             return; 
         }
 
@@ -61,7 +60,7 @@ public class StaticInventoryDisplay : InventoryDisplay
         {
             int systemIndex = i + offset;
 
-            InventorySlot slotToDisplay = inventorySystem.InventorySlots[systemIndex];
+            InventorySlot slotToDisplay = invToDisplay.InventorySlots[systemIndex];
 
             // Dictionary füllen
             if (!slotDictionary.ContainsKey(slots[i]))

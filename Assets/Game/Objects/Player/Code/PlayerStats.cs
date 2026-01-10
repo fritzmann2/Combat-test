@@ -4,9 +4,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class PlayerStats : BaseMobClass
-{
-    public movement playerMovement;
-    
+{    
     private List<equipmentStatsSlot> equipmentStats;
     private playerstats totalStats = new playerstats();
     

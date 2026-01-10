@@ -10,7 +10,7 @@ abstract public class BaseEntety : NetworkBehaviour
     );
 
     public int maxHealth;
-    public BoxCollider2D bx;
+    private BoxCollider2D bx;
 
     virtual public void Awake()
     {

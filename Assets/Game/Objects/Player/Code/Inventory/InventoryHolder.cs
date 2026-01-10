@@ -16,12 +16,13 @@ public class InventoryHolder : NetworkBehaviour
     [Header("Datenbank")]
     public List<InventoryItemData> itemDatabase;
     [SerializeField] private int inventorySize;
+    [SerializeField] private int equipmentSize = 5;
+
     [SerializeField] protected InventorySystem inventorySystem;
     [SerializeField] protected InventorySystem equipedSlots;
     private GameControls controls;
     private MouseItemData mouseItemData;
-    private StaticInventoryDisplayInv inventoryUI;
-    private StaticInventoryDisplayHot hotbarUI;
+    private StaticInventoryDisplay inventoryUI;
     
     public InventorySystem InventorySystem => inventorySystem;
     public InventorySystem EquipedSlots => equipedSlots;
@@ -34,13 +35,10 @@ public class InventoryHolder : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        hotbarUI = FindFirstObjectByType<StaticInventoryDisplayHot>(FindObjectsInactive.Include);
-        inventoryUI = FindFirstObjectByType<StaticInventoryDisplayInv>(FindObjectsInactive.Include);
+        inventoryUI = FindFirstObjectByType<StaticInventoryDisplay>(FindObjectsInactive.Include);
         if (inventoryUI == null) Debug.LogError("Kein StaticInventoryDisplayInv in der Scene gefunden!");
-        if (hotbarUI == null) Debug.LogError("Kein StaticInventoryDisplayHot in der Scene gefunden!");
-        if (hotbarUI != null && inventoryUI != null)
+        if (inventoryUI != null)
         {
-            hotbarUI.ConnectToPlayer(this);
             inventoryUI.ConnectToPlayer(this);
             
         }
@@ -66,6 +64,7 @@ public class InventoryHolder : NetworkBehaviour
         {
             Debug.LogWarning("cant create controls");
         }
+        equipedSlots = new InventorySystem(equipmentSize);
         inventorySystem = new InventorySystem(inventorySize);
     }
     void OnEnable()
@@ -276,9 +275,8 @@ public class InventoryHolder : NetworkBehaviour
         {
             string json = File.ReadAllText(SavePath);
             InventorySaveData saveData = JsonUtility.FromJson<InventorySaveData>(json);
-
-            saveData = loadinventorySystem(saveData);
-            Debug.Log("Inventar geladen.");
+            loadinventorySystem(saveData);
+//            Debug.Log("Inventar geladen.");
         }
         catch (System.Exception e)
         {
@@ -286,7 +284,7 @@ public class InventoryHolder : NetworkBehaviour
         }
     }
 
-    private InventorySaveData loadinventorySystem(InventorySaveData saveData)
+    private void loadinventorySystem(InventorySaveData saveData)
     {
         foreach (var slotData in saveData.invslots)
         {
@@ -317,10 +315,9 @@ public class InventoryHolder : NetworkBehaviour
                 instance.stats = slotData.savedStats;
 
                 // 4. Ab ins Inventar
-                inventorySystem.AddToInventory(instance, slotData.amount);
+                equipedSlots.AddToInventory(instance, slotData.amount);
             }
         }
-        return saveData;
     }
 
 
