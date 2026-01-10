@@ -4,7 +4,6 @@ using UnityEngine;
 public class dummyscript : BaseEntety
 {
     public GameObject hpbarfiller;
-    public GameObject PickUpItem;
     public WorldGenerator worldgen;
     private string id = "Testsubject";
 

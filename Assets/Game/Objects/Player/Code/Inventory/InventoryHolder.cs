@@ -84,14 +84,20 @@ public class InventoryHolder : NetworkBehaviour
     {
         InventoryItemData data = GetItemFromID(itemID);
         if (data == null) return;
-
+        if (itemRarity == 0) Debug.LogError("Item Rarity is null!");
+        if (amount == 0) Debug.LogWarning("Amount is null");
         // 1. Instanz erstellen
         InventoryItemInstance newItemInstance = new InventoryItemInstance(data);
         
         // Optional: Stats hinzufügen (Beispiel)
         if (newItemInstance.itemData.Type.ToString() == "Weapon")
         {
-            newItemInstance.stats.Add(new ItemParameter("strength", getStatbyrarity(itemRarity)));            
+            newItemInstance.stats = new EquipmentStats();
+            newItemInstance.stats.weaponstats = new Weaponstats();
+            newItemInstance.stats.weaponstats.weapondamage = getStatbyrarity(itemRarity);
+            newItemInstance.stats.weaponstats.strength = getStatbyrarity(itemRarity);
+            newItemInstance.stats.weaponstats.critChance = getStatbyrarity(itemRarity);
+            newItemInstance.stats.weaponstats.critDamage = getStatbyrarity(itemRarity);
         }        
 
         // 2. Ins Server-Inventar
@@ -100,12 +106,8 @@ public class InventoryHolder : NetworkBehaviour
         if (success)
         {
             Debug.Log("Server: Item hinzugefügt.");
-
-            // 3. WICHTIG: Liste in Array umwandeln für den Transport
-            ItemParameter[] statsArray = newItemInstance.stats.ToArray();
-
-            // 4. Jetzt können wir das Array direkt senden!
-            AddItemClientRpc(itemID, amount, statsArray);
+            
+            AddItemClientRpc(itemID, amount, newItemInstance.stats);
         }
     }
 
@@ -116,7 +118,7 @@ public class InventoryHolder : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void AddItemClientRpc(string itemID, int amount, ItemParameter[] statsArray)
+    private void AddItemClientRpc(string itemID, int amount, EquipmentStats stats)
     {
         if (IsServer) return; 
 
@@ -126,14 +128,8 @@ public class InventoryHolder : NetworkBehaviour
         {
             Debug.Log("Client: Item hinzugefügt " + data.ID);
 
-            // Instanz erstellen
             InventoryItemInstance clientInstance = new InventoryItemInstance(data);
-
-            // Array zurück in Liste wandeln
-            if (statsArray != null)
-            {
-                clientInstance.stats = new List<ItemParameter>(statsArray);
-            }
+            clientInstance.stats = stats;
 
             // Ins Client-Inventar
             inventorySystem.AddToInventory(clientInstance, amount);
@@ -183,7 +179,7 @@ public class InventoryHolder : NetworkBehaviour
         if (!IsServer) return;
 
         InventorySaveData saveData = new InventorySaveData();
-        // WICHTIG: Sicherstellen, dass die Liste existiert (siehe Ursache 3)
+        // WICHTIG: Sicherstellen, dass die Liste existiert
         if (saveData.slots == null) saveData.slots = new List<InventorySlotSaveData>();
 
         for (int i = 0; i < inventorySystem.InventorySlots.Count; i++)
@@ -193,17 +189,16 @@ public class InventoryHolder : NetworkBehaviour
             // 1. Prüfen: Ist der Slot überhaupt besetzt?
             if (slot.InventoryItemInstance == null) continue;
 
-            // 2. Prüfen: Hat die Instanz überhaupt Daten? (Behebt Ursache 1)
+            // 2. Prüfen: Hat die Instanz überhaupt Daten?
             if (slot.InventoryItemInstance.itemData == null)
             {
-//                Debug.LogWarning($"Slot {i} hat eine Instanz, aber kein ItemData (ScriptableObject fehlt)! Wird nicht gespeichert.");
                 continue;
             }
 
-            // 3. Prüfen: Sind die Stats null? (Behebt Ursache 2)
+            // 3. Prüfen: Sind die Stats null?
             if (slot.InventoryItemInstance.stats == null)
             {
-                slot.InventoryItemInstance.stats = new List<ItemParameter>();
+                slot.InventoryItemInstance.stats = new EquipmentStats();
             }
 
             // Jetzt ist es sicher zu speichern

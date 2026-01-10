@@ -6,12 +6,8 @@ using System.Collections.Generic;
 public class InventoryItem : NetworkBehaviour
 {
     public InventoryItemData itemData;
-    public List<ItemParameter> itemstats;
-    protected virtual void Awake()
-    {
-        if (itemstats == null) itemstats = new List<ItemParameter>();
-    }
-    public void Initialize(string _id, List<ItemParameter> _stats)
+    public string ItemID;
+    public void Initialize(string _id)
     {        
         if (itemData != null)
         {
@@ -21,28 +17,22 @@ public class InventoryItem : NetworkBehaviour
         {
             Debug.LogError("ItemData ist im Inspector nicht zugewiesen!");
         }
-        if (_stats != null)
-        {
-            itemstats = new List<ItemParameter>(_stats);
-        }
-        else
-        {
-            itemstats = new List<ItemParameter>();
-        }
+        
     }
 }
 
 [System.Serializable]
-public class InventoryItemInstance
+public class InventoryItemInstance 
 {
     public InventoryItemData itemData;      // Der unveränderliche Bauplan
-    public List<ItemParameter> stats;   // Die veränderlichen Werte
+    public WeaponType weaponType { get; set; } = WeaponType.None;
+    public ArmorType armorType { get; set; } = ArmorType.None;
+    public EquipmentStats stats;
 
     // Konstruktor für ein neues Item
     public InventoryItemInstance(InventoryItemData _data)
     {
         itemData = _data;
-        stats = new List<ItemParameter>();
     }
 }
 

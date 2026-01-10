@@ -44,7 +44,13 @@ public class Attackmanager : NetworkBehaviour
         {
             if (controls.Gameplay.Attack1.triggered || controls.Gameplay.Attack2.triggered || controls.Gameplay.Attack3.triggered || controls.Gameplay.Attack4.triggered) 
             {
-                currentWeaponScript.setstatsweapon( 5f, 1f, 10f, 50f);
+                currentWeaponScript.weaponstats = new Weaponstats
+                {
+                    weapondamage = 10f,
+                    strength = 5f,
+                    critChance = 20f,
+                    critDamage = 50f
+                };
             }
             if (controls.Gameplay.Attack1.triggered) currentWeaponScript.Attack1();
             if (controls.Gameplay.Attack2.triggered) currentWeaponScript.Attack2();

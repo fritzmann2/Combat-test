@@ -23,6 +23,7 @@ public class ItemPickUp : NetworkBehaviour
         if (holder != null)
         {   
             int itemRarity = 1;
+            Debug.Log("Item ID: " + ItemData.ID + " wird aufgehoben.");
             holder.AddItemRequest(ItemData.ID, amount, itemRarity);
 
             // Pickup entfernen

@@ -47,13 +47,14 @@ GameObject:
   - component: {fileID: 9003597603548912765}
   - component: {fileID: 2671177495704341155}
   - component: {fileID: 5101860541685513009}
-  - component: {fileID: 7668092172069583432}
   - component: {fileID: 2904845635663414591}
   - component: {fileID: 3391998883803777491}
   - component: {fileID: 2196424085680107788}
+  - component: {fileID: 7668092172069583432}
   - component: {fileID: -5597445049921152597}
   - component: {fileID: 5279757702115889303}
   - component: {fileID: 2009028433561660836}
+  - component: {fileID: 3318859025786867303}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -150,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1561542812
+  GlobalObjectIdHash: 951506825
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -163,46 +164,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 0
   AllowOwnerToParent: 0
---- !u!114 &7668092172069583432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2567050193010641777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6f6cfef659ecd4398d4dbd846b31a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  ShowTopMostFoldoutHeaderGroup: 1
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  groundCheckPos: {fileID: 2291839588112868561}
-  slideLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  wallSlideSpeed: 1
-  wallCheckPos: {fileID: 5029878927201705976}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  jumpForce: 1
-  jumpcount: 1
-  groundAcceleration: 15
-  basedeceleration: 15
-  airAcceleration: 4
-  dashtimer: 0
-  dashcooldown: 1
-  dashforce: 2
-  dashjumpcount: 0
-  basemoveSpeed: 8
-  GravityScale: 3
-  isGrounded: 1
-  isTouchingWall: 0
-  isWallSliding: 0
-  isSliding: 0
 --- !u!50 &2904845635663414591
 Rigidbody2D:
   serializedVersion: 5
@@ -334,6 +295,46 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &7668092172069583432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2567050193010641777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6f6cfef659ecd4398d4dbd846b31a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  ShowTopMostFoldoutHeaderGroup: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  groundCheckPos: {fileID: 2291839588112868561}
+  slideLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  wallSlideSpeed: 1
+  wallCheckPos: {fileID: 5029878927201705976}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  jumpForce: 1
+  jumpcount: 1
+  groundAcceleration: 15
+  basedeceleration: 15
+  airAcceleration: 4
+  dashtimer: 0
+  dashcooldown: 1
+  dashforce: 2
+  dashjumpcount: 0
+  basemoveSpeed: 8
+  GravityScale: 3
+  isGrounded: 1
+  isTouchingWall: 0
+  isWallSliding: 0
+  isSliding: 0
 --- !u!114 &-5597445049921152597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,228 +387,1422 @@ MonoBehaviour:
     inventorySlots:
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
     - inventoryItemInstance:
         itemData: {fileID: 0}
-        stats: []
+        stats:
+          weaponstats:
+            weapondamage: 0
+            strength: 0
+            critChance: 0
+            critDamage: 0
+            attackSpeed: 0
+          armorstats:
+            defense: 0
+            spellresistance: 0
+          accessorystats:
+            health: 0
+            mana: 0
+            healthRegen: 0
+            manaRegen: 0
+            movementSpeed: 0
+            attackSpeed: 0
+            critChance: 0
+            critDamage: 0
+            strength: 0
+            defense: 0
+            spellresistance: 0
       stacksize: 0
+--- !u!114 &3318859025786867303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2567050193010641777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1d3ca9794f9ce84c9ef3665110628c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  ShowTopMostFoldoutHeaderGroup: 1
+  health:
+    m_InternalValue: 100
+  maxHealth: 0
+  bx: {fileID: 0}
+  playerMovement: {fileID: 0}
 --- !u!1 &3843636529787185812
 GameObject:
   m_ObjectHideFlags: 0

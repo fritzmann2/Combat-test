@@ -62,7 +62,7 @@ abstract public class BaseEntety : NetworkBehaviour
     }
 }
 
-abstract class BaseMobClass : BaseEntety
+abstract public class BaseMobClass : BaseEntety
 {
     public float movementSpeed { get; set; }
     public float attackSpeed { get; set; }
@@ -72,3 +72,4 @@ abstract class BaseMobClass : BaseEntety
     public float defense { get; set; }
     public float spellresistance { get; set; }    
 }
+

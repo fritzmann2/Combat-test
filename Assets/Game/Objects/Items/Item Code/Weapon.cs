@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 
 public enum AttackType
@@ -17,7 +18,7 @@ public enum WeaponType
     Sword,
     Bow,
     Staff, 
-    Non
+    None
 }   
 public enum ArmorType
 {
@@ -25,7 +26,7 @@ public enum ArmorType
     Chestplate,
     Leggings,
     Boots,
-    Non
+    None
 }
 
 public enum Itemtype
@@ -36,19 +37,35 @@ public enum Itemtype
 
 }
 
+[System.Serializable]
+public class Weaponstats : INetworkSerializable
+{
+    public float weapondamage;
+    public float strength;
+    public float critChance;
+    public float critDamage;
+    public float attackSpeed;
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        serializer.SerializeValue(ref weapondamage);
+        serializer.SerializeValue(ref strength);
+        serializer.SerializeValue(ref critChance);
+        serializer.SerializeValue(ref critDamage);
+        serializer.SerializeValue(ref attackSpeed);
+    }
+}
+
+
+
 
 
 abstract public class Weapon : InventoryItem
 {
+    public Weaponstats weaponstats { get; set; }
+    public PlayerStats playerStats;
     public WeaponType Type { get; set; }
+    public float attacktypemultiplier;
     public Animator anim;
-    public float weapondamage { get; set; }
-    public float attacktypemultiplier { get; set; }
-    public float damage { get; set; }
-    public float strength { get; set; }
-    public float attackSpeed { get; set; }
-    public float critChance { get; set; }
-    public float critDamage { get; set; }
     public Collider2D bx;
     private AttackType attacktype;
     private Transform visualTarget;
@@ -67,12 +84,12 @@ abstract public class Weapon : InventoryItem
     {}
 
     //Komponenten setzen
-    protected override void Awake()
+    protected virtual void Awake()
     {
-        base.Awake();
         bx = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
         controls = new GameControls();
+        playerStats = GetComponentInParent<PlayerStats>();
     }
     
     void OnEnable()
@@ -85,22 +102,14 @@ abstract public class Weapon : InventoryItem
         controls.Disable();
     }
 
-    //Waffenstats setzen
-    public void setstatsweapon(float str, float atkspeed, float critchc, float critdmg)
-    {
-        strength = str;
-        attackSpeed = atkspeed;
-        critChance = critchc;
-        critDamage = critdmg;
-    }
     //Angriff ausführen
     public void performattack(AttackType attacktype)
     {        
         if(anim != null)
         {   
             this.attacktype = attacktype;
-            int crit = IsCrit();
-            damage = (weapondamage + 0.1f * strength) * (1 + critDamage * 0.01f * crit) * attacktypemultiplier;
+            //int crit = IsCrit();
+            //damage = (weapondamage + 0.1f * strength) * (1 + critDamage * 0.01f * crit) * attacktypemultiplier;
             PlayAnimationClientsAndHostRpc(attacktype);
         }
     }
@@ -129,27 +138,19 @@ abstract public class Weapon : InventoryItem
 
         if(other.CompareTag("Player"))
         {
-            DealotherDamage(mob);
+            playerStats.DealotherDamage(mob);
             Debug.Log("Hit Player");
 
         }
         if (other.CompareTag("mob"))
         {
-            DealotherDamage(mob);
+            playerStats.DealotherDamage(mob);
             Debug.Log("Hit Mob");
         }
         
     }
     //Schaden bei anderem zufügen
-    public void DealotherDamage(BaseEntety mob)
-    {
-        mob.TakeDamage(damage);
-    }
-    private int IsCrit()
-    {
-        float roll = Random.Range(0f, 100f);
-        return (roll <= critChance) ? 1 : 0;
-    }
+
     //Animationlänge ermitteln
     public float GetAnimationLength()
     {
@@ -217,8 +218,6 @@ public class Sword : Weapon
     {
         Type = WeaponType.Sword;
         base.Awake();
-        weapondamage = 10f;
-        strength = 5f;
     }
     
 }
@@ -245,7 +244,7 @@ public class Bow : Weapon
     {
         Type = WeaponType.Bow;
         base.Awake();
-        weapondamage = 8f;
-        strength = 3f;
+        //weapondamage = 8f;
+        //strength = 3f;
     }
 }
