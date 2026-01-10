@@ -24,5 +24,6 @@ public struct InventorySlotSaveData
 [System.Serializable]
 public class InventorySaveData
 {
-    public List<InventorySlotSaveData> slots = new List<InventorySlotSaveData>();
+    public List<InventorySlotSaveData> invslots = new List<InventorySlotSaveData>();
+    public List<InventorySlotSaveData> equipmentSlots = new List<InventorySlotSaveData>();
 }

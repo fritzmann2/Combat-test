@@ -10,9 +10,11 @@ public class MouseItemData : MonoBehaviour
     public TextMeshProUGUI itemCount;
     public InventorySlots_UI inventorySlot;
     private int indexslot;
+    private bool hasitem = false;
     public event UnityAction<int, int> ItemChange;
+    public event UnityAction<int, int> EquipRequest;
 
-    void Awake()
+    void Awake() 
     {
         ItemSprite.color = Color.clear;
         itemCount.text = null;
@@ -20,7 +22,18 @@ public class MouseItemData : MonoBehaviour
 
     public void clickedOnInventorySlot(InventorySlots_UI clickedSlot, int index)
     {
-        if (inventorySlot == null)
+        if (clickedSlot is EquipmentSlot eqSlot && hasitem)
+        {
+            Debug.Log("Equip request sent");
+            EquipRequest?.Invoke(indexslot, index);
+            return;
+        }
+        if (clickedSlot.AssignedInventorySlot.InventoryItemInstance == null) 
+        {
+            Debug.Log("Error Slot is empty");
+            return;
+        }
+        if (inventorySlot == null && clickedSlot.AssignedInventorySlot.InventoryItemInstance.itemData != null)
         {
             Debug.Log("MouseItemData: Slot aufgenommen");
             inventorySlot = clickedSlot;
@@ -28,6 +41,7 @@ public class MouseItemData : MonoBehaviour
             ItemSprite.sprite = inventorySlot.AssignedInventorySlot.InventoryItemInstance.itemData.Icon;
             itemCount.text = inventorySlot.AssignedInventorySlot.StackSize.ToString();
             ItemSprite.color = Color.white;
+            hasitem = true;
 
         }
         else
@@ -37,6 +51,7 @@ public class MouseItemData : MonoBehaviour
             ItemSprite.sprite = null;
             ItemSprite.color = Color.clear;
             itemCount.text = null;
+            hasitem = false;
         }
     }
     void Update()

@@ -86,8 +86,6 @@ public class WorldGenerator : NetworkBehaviour
             }
         }
 
-        // --- HIER FEHLTE DER CODE ---
-
         // 2. Neue Chunks spawnen (Was fehlt, wird gebaut)
         foreach (Vector2Int coord in chunksToKeep)
         {
@@ -148,6 +146,9 @@ public class WorldGenerator : NetworkBehaviour
         {
             if (chunkObj != null)
             {
+                ChunkData chunkData = chunkObj.GetComponentInChildren<ChunkData>();
+                chunkData.DespawnAllMobs();
+
                 NetworkObject netObj = chunkObj.GetComponent<NetworkObject>();
                 if (netObj != null) netObj.Despawn();
                 Destroy(chunkObj);
@@ -160,6 +161,7 @@ public class WorldGenerator : NetworkBehaviour
     void SpawnMobsInChunk(GameObject chunk)
     {
         // Sucht alle MobSpawnPoint-Skripte, die Kinder von diesem Chunk sind
+        ChunkData chunkData = chunk.GetComponentInChildren<ChunkData>();
         MobSpawnPoint[] spawnPoints = chunk.GetComponentsInChildren<MobSpawnPoint>();
         foreach (MobSpawnPoint spawnPoint in spawnPoints)
         {
@@ -169,6 +171,7 @@ public class WorldGenerator : NetworkBehaviour
             var netObj = dummyobj.GetComponent<NetworkObject>();
             if (netObj != null)
             {
+                chunkData.RegisterMob(netObj);
                 netObj.Spawn();
                 
             }

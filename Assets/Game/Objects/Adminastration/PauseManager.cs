@@ -39,7 +39,7 @@ public class PauseManager : MonoBehaviour
         }
         if (controls.Gameplay.OpenInventory.WasPressedThisFrame())
         {
-            Debug.Log("Try open inventory");
+//            Debug.Log("Try open inventory");
             if (InventoryObj.activeSelf)
             {
                 InventoryObj.SetActive(false);

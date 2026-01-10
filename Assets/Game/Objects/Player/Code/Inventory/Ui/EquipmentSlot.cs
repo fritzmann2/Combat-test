@@ -6,20 +6,33 @@ public class EquipmentSlot : InventorySlots_UI
     [SerializeField] public Itemtype equipmentType;
     [SerializeField] public WeaponType weaponType;
     [SerializeField] public ArmorType armorType;
+    [SerializeField] public AccessoryType accessoryType;
+
+    
     public override void Init(InventorySlot slot, int index)
     {
+        if (slot.InventoryItemInstance == null || slot.InventoryItemInstance.itemData == null)
+        {
+            Debug.Log("Slot ist leer");
+            base.Init(slot, index); 
+            return;
+        }
         if (equipmentType == slot.InventoryItemInstance.itemData.Type)
         {
             if (equipmentType == Itemtype.Weapon)
             {
-                if (weaponType == slot.InventoryItemInstance.weaponType)
-                {
-                    overide(slot, index);  
-                }
+                overide(slot, index);     
             }
             if (equipmentType == Itemtype.Armor)
             {
                 if (armorType == slot.InventoryItemInstance.armorType)
+                {
+                    overide(slot, index);
+                }
+            }
+            if (equipmentType == Itemtype.Accessory)
+            {
+                if (accessoryType == slot.InventoryItemInstance.accessoryType)
                 {
                     overide(slot, index);
                 }

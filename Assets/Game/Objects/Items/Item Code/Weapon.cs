@@ -29,6 +29,13 @@ public enum ArmorType
     None
 }
 
+public enum AccessoryType
+{
+    Ring,
+    Necklace,
+    None
+}
+
 public enum Itemtype
 {
     Weapon,

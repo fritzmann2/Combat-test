@@ -8,6 +8,7 @@ public class InventorySlots_UI : MonoBehaviour
     [SerializeField] private Image itemSprite;
     [SerializeField] private TextMeshProUGUI itemCount;
     [SerializeField] private InventorySlot assignedInventorySlot;
+    [SerializeField] private bool isEquipmentSlot = false;
     private int index {get; set; }
 
     private Button button;
@@ -17,9 +18,14 @@ public class InventorySlots_UI : MonoBehaviour
 
     private void Awake()
     {
-        //ClearSlot();
+        ClearSlot();
 
         ParentDisplay = transform.parent.GetComponent<InventoryDisplay>();
+        if (ParentDisplay == null) 
+        {
+            isEquipmentSlot = true;
+            ParentDisplay = GetComponentInParent<InventoryParentLink>().inventoryDisplay;
+        }
 
         button = GetComponent<Button>();
         button?.onClick.AddListener(OnUISlotClick);
@@ -50,14 +56,14 @@ public class InventorySlots_UI : MonoBehaviour
             Debug.Log("InventoryItemData ist null");
         }
         
-        Debug.Log("Update Slot");
+//        Debug.Log("Update Slot");
         if (slot.InventoryItemInstance.itemData != null)
         {
             itemSprite.sprite = slot.InventoryItemInstance.itemData.Icon;
             itemSprite.color = Color.white;
             if (slot.StackSize > 1) itemCount.text = slot.StackSize.ToString();
             else itemCount.text = "";
-            Debug.Log("item slot set");
+//            Debug.Log("item slot set");
         }
 
         else
@@ -80,6 +86,8 @@ public class InventorySlots_UI : MonoBehaviour
     }
     public void OnUISlotClick()
     {
+        Debug.Log("UI Slot clicked");
+        if( ParentDisplay == null) Debug.Log("ParentDisplay is null");
         ParentDisplay?.SlotClicked(this, index);
     }
 }

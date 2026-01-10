@@ -5,6 +5,7 @@ public class StaticInventoryDisplay : InventoryDisplay
 {
     private InventoryHolder inventoryHolder; 
     [SerializeField] private InventorySlots_UI[] slots;
+    [SerializeField] private EquipmentSlot[] equipmentSlots;
     [SerializeField] protected int offset = 0;
     private bool wasactiveonce = false;
 
@@ -21,7 +22,7 @@ public class StaticInventoryDisplay : InventoryDisplay
                 inventorySystem = inventoryHolder.InventorySystem;
                 AssignSlot(inventorySystem);
                 
-                Debug.Log("Inventar beim öffnen geladen.");
+//                Debug.Log("Inventar beim öffnen geladen.");
                 wasactiveonce = true;
             }
         }

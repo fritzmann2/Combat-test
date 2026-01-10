@@ -27,6 +27,7 @@ public class InventoryItemInstance
     public InventoryItemData itemData;      // Der unveränderliche Bauplan
     public WeaponType weaponType { get; set; } = WeaponType.None;
     public ArmorType armorType { get; set; } = ArmorType.None;
+    public AccessoryType accessoryType { get; set; } = AccessoryType.None;
     public EquipmentStats stats;
 
     // Konstruktor für ein neues Item

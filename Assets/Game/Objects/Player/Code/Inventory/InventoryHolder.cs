@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using System.Linq;
 using System.IO;
+using UnityEditor.Overlays;
+
 
 #if UNITY_EDITOR
 using UnityEditor; 
@@ -15,12 +17,14 @@ public class InventoryHolder : NetworkBehaviour
     public List<InventoryItemData> itemDatabase;
     [SerializeField] private int inventorySize;
     [SerializeField] protected InventorySystem inventorySystem;
+    [SerializeField] protected InventorySystem equipedSlots;
     private GameControls controls;
     private MouseItemData mouseItemData;
     private StaticInventoryDisplayInv inventoryUI;
     private StaticInventoryDisplayHot hotbarUI;
     
     public InventorySystem InventorySystem => inventorySystem;
+    public InventorySystem EquipedSlots => equipedSlots;
 
     public static UnityAction<InventorySystem> OnDynamicInventoryDisplayRequested;
     private string SavePath => Path.Combine(Application.persistentDataPath, $"inventory_{OwnerClientId}.json");
@@ -47,6 +51,7 @@ public class InventoryHolder : NetworkBehaviour
         if (IsServer) LoadInventory();
         mouseItemData = FindFirstObjectByType<MouseItemData>(FindObjectsInactive.Include);
         mouseItemData.ItemChange += HandleSwap;
+        mouseItemData.EquipRequest += EquipItem;
     }
     public override void OnNetworkDespawn()
     {
@@ -173,15 +178,38 @@ public class InventoryHolder : NetworkBehaviour
         inventorySystem.OnInventorySlotChanged?.Invoke(slot1);
         inventorySystem.OnInventorySlotChanged?.Invoke(slot2);
     }
+    private void EquipItem(int index1, int index2)
+    {
+        Debug.Log("Equip requested between index " + index1 + " and index " + index2);
+        InventorySlot tempData = inventorySystem.InventorySlots[index1];
+        if (equipedSlots.InventorySlots[index2] != null)
+        {
+            inventorySystem.InventorySlots[index1] = equipedSlots.InventorySlots[index2];
+            equipedSlots.InventorySlots[index2] = tempData;
+        }
+        else
+        {
+            // Einfaches Ausrüsten
+            equipedSlots.InventorySlots[index2] = tempData;
+            inventorySystem.InventorySlots[index1] = new InventorySlot();
+        }
+    }
+    
     // Save System
     public void SaveInventory()
     {
         if (!IsServer) return;
 
-        InventorySaveData saveData = new InventorySaveData();
-        // WICHTIG: Sicherstellen, dass die Liste existiert
-        if (saveData.slots == null) saveData.slots = new List<InventorySlotSaveData>();
+        InventorySaveData saveData = saveinventorySystem();        
 
+        string json = JsonUtility.ToJson(saveData, true);
+        File.WriteAllText(SavePath, json);
+        Debug.Log($"Inventar gespeichert in: {SavePath}");
+    }
+    private InventorySaveData saveinventorySystem()
+    {       
+        InventorySaveData saveData = new InventorySaveData();
+        if (saveData.invslots == null) saveData.invslots = new List<InventorySlotSaveData>();
         for (int i = 0; i < inventorySystem.InventorySlots.Count; i++)
         {
             var slot = inventorySystem.InventorySlots[i];
@@ -202,17 +230,42 @@ public class InventoryHolder : NetworkBehaviour
             }
 
             // Jetzt ist es sicher zu speichern
-            saveData.slots.Add(new InventorySlotSaveData(
+            saveData.invslots.Add(new InventorySlotSaveData(
                 slot.InventoryItemInstance.itemData.ID, 
                 slot.StackSize, 
                 i,
                 slot.InventoryItemInstance.stats 
             ));
         }
+        if (saveData.equipmentSlots == null) saveData.equipmentSlots = new List<InventorySlotSaveData>();
+        for (int i = 0; i < equipedSlots.InventorySlots.Count; i++)
+        {
+            var slot = equipedSlots.InventorySlots[i];
 
-        string json = JsonUtility.ToJson(saveData, true);
-        File.WriteAllText(SavePath, json);
-        Debug.Log($"Inventar gespeichert in: {SavePath}");
+            // 1. Prüfen: Ist der Slot überhaupt besetzt?
+            if (slot.InventoryItemInstance == null) continue;
+
+            // 2. Prüfen: Hat die Instanz überhaupt Daten?
+            if (slot.InventoryItemInstance.itemData == null)
+            {
+                continue;
+            }
+
+            // 3. Prüfen: Sind die Stats null?
+            if (slot.InventoryItemInstance.stats == null)
+            {
+                slot.InventoryItemInstance.stats = new EquipmentStats();
+            }
+
+            // Jetzt ist es sicher zu speichern
+            saveData.invslots.Add(new InventorySlotSaveData(
+                slot.InventoryItemInstance.itemData.ID, 
+                slot.StackSize, 
+                i,
+                slot.InventoryItemInstance.stats 
+            ));
+        }
+        return saveData;
     }
 
     public void LoadInventory()
@@ -224,22 +277,7 @@ public class InventoryHolder : NetworkBehaviour
             string json = File.ReadAllText(SavePath);
             InventorySaveData saveData = JsonUtility.FromJson<InventorySaveData>(json);
 
-            foreach (var slotData in saveData.slots)
-            {
-                // 1. Suche ScriptableObject
-                InventoryItemData template = GetItemFromID(slotData.itemID);
-
-                if (template != null)
-                {
-                    // 2. Erstelle Instanz
-                    InventoryItemInstance instance = new InventoryItemInstance(template);
-                    // 3. Fülle Stats zurück
-                    instance.stats = slotData.savedStats;
-
-                    // 4. Ab ins Inventar
-                    inventorySystem.AddToInventory(instance, slotData.amount);
-                }
-            }
+            saveData = loadinventorySystem(saveData);
             Debug.Log("Inventar geladen.");
         }
         catch (System.Exception e)
@@ -248,7 +286,42 @@ public class InventoryHolder : NetworkBehaviour
         }
     }
 
+    private InventorySaveData loadinventorySystem(InventorySaveData saveData)
+    {
+        foreach (var slotData in saveData.invslots)
+        {
+            // 1. Suche ScriptableObject
+            InventoryItemData template = GetItemFromID(slotData.itemID);
 
+            if (template != null)
+            {
+                // 2. Erstelle Instanz
+                InventoryItemInstance instance = new InventoryItemInstance(template);
+                // 3. Fülle Stats zurück
+                instance.stats = slotData.savedStats;
+
+                // 4. Ab ins Inventar
+                inventorySystem.AddToInventory(instance, slotData.amount);
+            }
+        }
+        foreach (var slotData in saveData.equipmentSlots)
+        {
+            // 1. Suche ScriptableObject
+            InventoryItemData template = GetItemFromID(slotData.itemID);
+
+            if (template != null)
+            {
+                // 2. Erstelle Instanz
+                InventoryItemInstance instance = new InventoryItemInstance(template);
+                // 3. Fülle Stats zurück
+                instance.stats = slotData.savedStats;
+
+                // 4. Ab ins Inventar
+                inventorySystem.AddToInventory(instance, slotData.amount);
+            }
+        }
+        return saveData;
+    }
 
 
     #if UNITY_EDITOR
