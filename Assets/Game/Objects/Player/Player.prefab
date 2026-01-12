@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 5279757702115889303}
   - component: {fileID: 2009028433561660836}
   - component: {fileID: 3318859025786867303}
+  - component: {fileID: 131929589387796209}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -151,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 951506825
+  GlobalObjectIdHash: 1561542812
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -381,8 +382,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryHolder
   ShowTopMostFoldoutHeaderGroup: 1
   itemDatabase:
+  - {fileID: 11400000, guid: a89848a23d71510499d8d12f3e960967, type: 2}
   - {fileID: 11400000, guid: ea5d6a9c2601eda45a5c5f2adb0d1067, type: 2}
   inventorySize: 56
+  equipmentSize: 8
   inventorySystem:
     inventorySlots:
     - inventoryItemInstance:
@@ -2003,8 +2006,22 @@ MonoBehaviour:
   health:
     m_InternalValue: 100
   maxHealth: 0
-  bx: {fileID: 0}
-  playerMovement: {fileID: 0}
+  inventoryHolder: {fileID: 0}
+  equipmentStats: []
+--- !u!114 &131929589387796209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2567050193010641777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bdfa48c6f4fbb41b7c8a48425fc064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSaveHandler
+  ShowTopMostFoldoutHeaderGroup: 1
+  playerName: Fritzmann
 --- !u!1 &3843636529787185812
 GameObject:
   m_ObjectHideFlags: 0

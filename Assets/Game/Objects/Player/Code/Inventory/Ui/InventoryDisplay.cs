@@ -5,6 +5,7 @@ abstract public class InventoryDisplay : MonoBehaviour
 {
     [SerializeField] public MouseItemData mouseInventoryItem;
     protected InventorySystem inventorySystem;
+    protected InventorySystem equipmentSlots;
     protected Dictionary<InventorySlots_UI, InventorySlot> slotDictionary;
 
     public InventorySystem InventorySystem => inventorySystem;
@@ -18,6 +19,7 @@ abstract public class InventoryDisplay : MonoBehaviour
 
     protected virtual void UpdateSlot(InventorySlot updatedSlot)
     {
+        Debug.Log("InventoryDisplay: UpdateSlot called");
         foreach (var slot in slotDictionary)
         {
             if (slot.Value == updatedSlot)
@@ -29,7 +31,7 @@ abstract public class InventoryDisplay : MonoBehaviour
 
     public void SlotClicked(InventorySlots_UI clickedSlot, int index)
     {
-        Debug.Log("slot clicked: " + clickedSlot.ToString() + " at index " + index.ToString());
+//        Debug.Log("slot clicked: " + clickedSlot.ToString() + " at index " + index.ToString());
         if (mouseInventoryItem != null)
         {
             mouseInventoryItem.clickedOnInventorySlot(clickedSlot, index);

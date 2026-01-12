@@ -1,11 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum InventoryDisplayType
+{
+    MainInventory,
+    Equipment
+}
 public class StaticInventoryDisplay : InventoryDisplay
 {
     private InventoryHolder inventoryHolder; 
+    [SerializeField] private InventoryDisplayType displayType;
     [SerializeField] private InventorySlots_UI[] slots;
     [SerializeField] protected int offset = 0;
+    protected InventorySystem currentSystemToDisplay;
     private bool wasactiveonce = false;
 
     protected override void Start()
@@ -14,35 +21,45 @@ public class StaticInventoryDisplay : InventoryDisplay
     }
     private void OnEnable()
     {
-        if(wasactiveonce == false)
+        if (!wasactiveonce && inventoryHolder != null)
         {
-            if (inventoryHolder != null)
-            {
-                inventorySystem = inventoryHolder.InventorySystem;
-                AssignSlot(inventorySystem);
-                
-                Debug.Log("Inventar beim öffnen geladen.");
-                wasactiveonce = true;
-            }
+            SetupDisplay();
+            wasactiveonce = true;
         }
     }
 
     public void ConnectToPlayer(InventoryHolder playerHolder)
     {
         inventoryHolder = playerHolder;
-
+        SetupDisplay();
+        
+    }
+    private void SetupDisplay()
+    {
         if (inventoryHolder != null)
         {
             inventorySystem = inventoryHolder.InventorySystem;
-            
-            inventorySystem.OnInventorySlotChanged -= UpdateSlot;
-            inventorySystem.OnInventorySlotChanged += UpdateSlot;
-            
+            equipmentSlots = inventoryHolder.EquipedSlots; 
 
+            InventorySystem systemToDisplay = null;
 
-            AssignSlot(inventorySystem);
+            if (displayType == InventoryDisplayType.MainInventory)
+            {
+                systemToDisplay = inventorySystem;
+            }
+            else if (displayType == InventoryDisplayType.Equipment)
+            {
+                systemToDisplay = equipmentSlots;
+            }
+
+            if (systemToDisplay != null)
+            {
+                systemToDisplay.OnInventorySlotChanged -= UpdateSlot;
+                systemToDisplay.OnInventorySlotChanged += UpdateSlot;
+
+                AssignSlot(systemToDisplay);
+            }
             
-            //Debug.Log("Inventar erfolgreich mit lokalem Spieler verknüpft.");
         }
     }
 
@@ -50,9 +67,10 @@ public class StaticInventoryDisplay : InventoryDisplay
     {
         slotDictionary = new Dictionary<InventorySlots_UI, InventorySlot>();
 
+        // Sicherheitscheck
         if (slots.Length + offset > invToDisplay.InventorySize) 
         {
-            Debug.LogError($"Inventory Display Error auf {gameObject.name}: UI benötigt Index bis {slots.Length + offset}, aber System hat nur {invToDisplay.InventorySize} Slots!");
+            Debug.LogError($"Inventory Display Error auf {gameObject.name}: UI hat {slots.Length} Slots, aber System '{displayType}' hat nur {invToDisplay.InventorySize} Slots!");
             return; 
         }
 
@@ -62,15 +80,12 @@ public class StaticInventoryDisplay : InventoryDisplay
 
             InventorySlot slotToDisplay = invToDisplay.InventorySlots[systemIndex];
 
-            // Dictionary füllen
             if (!slotDictionary.ContainsKey(slots[i]))
             {
                 slotDictionary.Add(slots[i], slotToDisplay);
             }
             
-            // UI Slot initialisieren
             slots[i].Init(slotToDisplay, i);
         }
     }
-    
 }

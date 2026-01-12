@@ -16,18 +16,19 @@ public class InventoryHolder : NetworkBehaviour
     [Header("Datenbank")]
     public List<InventoryItemData> itemDatabase;
     [SerializeField] private int inventorySize;
-    [SerializeField] private int equipmentSize = 5;
+    [SerializeField] private int equipmentSize;
 
     [SerializeField] protected InventorySystem inventorySystem;
     [SerializeField] protected InventorySystem equipedSlots;
     private GameControls controls;
     private MouseItemData mouseItemData;
-    private StaticInventoryDisplay inventoryUI;
     
     public InventorySystem InventorySystem => inventorySystem;
     public InventorySystem EquipedSlots => equipedSlots;
 
     public static UnityAction<InventorySystem> OnDynamicInventoryDisplayRequested;
+    public static event UnityAction OnEquipmentChanged;
+
     private string SavePath => Path.Combine(Application.persistentDataPath, $"inventory_{OwnerClientId}.json");
 
 
@@ -35,21 +36,21 @@ public class InventoryHolder : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        inventoryUI = FindFirstObjectByType<StaticInventoryDisplay>(FindObjectsInactive.Include);
-        if (inventoryUI == null) Debug.LogError("Kein StaticInventoryDisplayInv in der Scene gefunden!");
-        if (inventoryUI != null)
+        StaticInventoryDisplay[] allDisplays = FindObjectsByType<StaticInventoryDisplay>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        if (allDisplays.Length > 0)
         {
-            inventoryUI.ConnectToPlayer(this);
-            
+            foreach (var display in allDisplays)
+            {
+                display.ConnectToPlayer(this);
+            }
         }
         else
         {
-            Debug.LogError("Kein StaticInventoryDisplay in der Scene gefunden!");
+            Debug.LogWarning("Keine StaticInventoryDisplays in der Scene gefunden!");
         }
         if (IsServer) LoadInventory();
         mouseItemData = FindFirstObjectByType<MouseItemData>(FindObjectsInactive.Include);
-        mouseItemData.ItemChange += HandleSwap;
-        mouseItemData.EquipRequest += EquipItem;
+        mouseItemData.ItemChange += MoveItem;
     }
     public override void OnNetworkDespawn()
     {
@@ -164,35 +165,42 @@ public class InventoryHolder : NetworkBehaviour
         }
     }
  
-    private void HandleSwap(int index1, int index2)
-    {
-        Debug.Log("Swap requested between index " + index1 + " and index " + index2);
-        InventorySlot tempData = inventorySystem.InventorySlots[index1];
-        inventorySystem.InventorySlots[index1] = inventorySystem.InventorySlots[index2];
-        inventorySystem.InventorySlots[index2] = tempData;
+    private void MoveItem(int index1, int index2, bool isSourceEq, bool isTargetEq)
+{
+    // 1. BESTIMMEN DER SYSTEME
+    InventorySystem sourceSystem = isSourceEq ? equipedSlots : inventorySystem;
+    InventorySystem targetSystem = isTargetEq ? equipedSlots : inventorySystem;
 
-        InventorySlot slot1 = inventorySystem.InventorySlots[index1];
-        InventorySlot slot2 = inventorySystem.InventorySlots[index2];
+    // 2. SLOTS HOLEN
+    InventorySlot slot1 = sourceSystem.InventorySlots[index1];
+    InventorySlot slot2 = targetSystem.InventorySlots[index2];
 
-        inventorySystem.OnInventorySlotChanged?.Invoke(slot1);
-        inventorySystem.OnInventorySlotChanged?.Invoke(slot2);
-    }
-    private void EquipItem(int index1, int index2)
+    Debug.Log($"MoveItem: Von {sourceSystem} [{index1}] nach {targetSystem} [{index2}]");
+
+    // 3. DATEN SICHERN
+    InventoryItemInstance tempItem = slot1.InventoryItemInstance;
+    int tempCount = slot1.StackSize;
+
+    // 4. TAUSCH-LOGIK
+    if (slot2.InventoryItemInstance != null)
     {
-        Debug.Log("Equip requested between index " + index1 + " and index " + index2);
-        InventorySlot tempData = inventorySystem.InventorySlots[index1];
-        if (equipedSlots.InventorySlots[index2] != null)
-        {
-            inventorySystem.InventorySlots[index1] = equipedSlots.InventorySlots[index2];
-            equipedSlots.InventorySlots[index2] = tempData;
-        }
-        else
-        {
-            // Einfaches Ausrüsten
-            equipedSlots.InventorySlots[index2] = tempData;
-            inventorySystem.InventorySlots[index1] = new InventorySlot();
-        }
+        InventoryItemInstance targetItem = slot2.InventoryItemInstance;
+        int targetStack = slot2.StackSize;
+
+        slot2.UpdateInventorySlot(tempItem, tempCount);  
+        slot1.UpdateInventorySlot(targetItem, targetStack); 
     }
+    else
+    {
+        slot2.UpdateInventorySlot(tempItem, tempCount);   
+        slot1.clearSlot();                                
+    }
+
+    // 5. EVENTS FEUERN
+    
+    sourceSystem.OnInventorySlotChanged?.Invoke(slot1);
+    targetSystem.OnInventorySlotChanged?.Invoke(slot2);
+}
     
     // Save System
     public void SaveInventory()
@@ -205,7 +213,7 @@ public class InventoryHolder : NetworkBehaviour
         File.WriteAllText(SavePath, json);
         Debug.Log($"Inventar gespeichert in: {SavePath}");
     }
-    private InventorySaveData saveinventorySystem()
+    public InventorySaveData saveinventorySystem()
     {       
         InventorySaveData saveData = new InventorySaveData();
         if (saveData.invslots == null) saveData.invslots = new List<InventorySlotSaveData>();
@@ -257,7 +265,7 @@ public class InventoryHolder : NetworkBehaviour
             }
 
             // Jetzt ist es sicher zu speichern
-            saveData.invslots.Add(new InventorySlotSaveData(
+            saveData.equipmentSlots.Add(new InventorySlotSaveData(
                 slot.InventoryItemInstance.itemData.ID, 
                 slot.StackSize, 
                 i,
@@ -286,38 +294,42 @@ public class InventoryHolder : NetworkBehaviour
 
     private void loadinventorySystem(InventorySaveData saveData)
     {
+        // --- Lade Hauptinventar ---
         foreach (var slotData in saveData.invslots)
         {
-            // 1. Suche ScriptableObject
             InventoryItemData template = GetItemFromID(slotData.itemID);
 
             if (template != null)
             {
-                // 2. Erstelle Instanz
                 InventoryItemInstance instance = new InventoryItemInstance(template);
-                // 3. Fülle Stats zurück
                 instance.stats = slotData.savedStats;
 
-                // 4. Ab ins Inventar
-                inventorySystem.AddToInventory(instance, slotData.amount);
+                if (slotData.slotIndex < inventorySystem.InventorySize)
+                {
+                    inventorySystem.InventorySlots[slotData.slotIndex].UpdateInventorySlot(instance, slotData.amount);
+                    
+                }
             }
         }
+
+        // --- Lade Equipment ---
         foreach (var slotData in saveData.equipmentSlots)
         {
-            // 1. Suche ScriptableObject
             InventoryItemData template = GetItemFromID(slotData.itemID);
 
             if (template != null)
             {
-                // 2. Erstelle Instanz
                 InventoryItemInstance instance = new InventoryItemInstance(template);
-                // 3. Fülle Stats zurück
                 instance.stats = slotData.savedStats;
 
-                // 4. Ab ins Inventar
-                equipedSlots.AddToInventory(instance, slotData.amount);
+                if (slotData.slotIndex < equipedSlots.InventorySize)
+                {
+                    equipedSlots.InventorySlots[slotData.slotIndex].UpdateInventorySlot(instance, slotData.amount);
+
+                }
             }
         }
+        
     }
 
 

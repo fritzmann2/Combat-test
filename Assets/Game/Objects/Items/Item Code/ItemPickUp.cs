@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class ItemPickUp : NetworkBehaviour
 {
-    public InventoryItemData ItemData;
+    public InventoryItemData[] ItemData;
     public int amount = 1;
     private BoxCollider2D bx;
 
@@ -23,8 +23,9 @@ public class ItemPickUp : NetworkBehaviour
         if (holder != null)
         {   
             int itemRarity = 1;
-            Debug.Log("Item ID: " + ItemData.ID + " wird aufgehoben.");
-            holder.AddItemRequest(ItemData.ID, amount, itemRarity);
+            int randint = Random.Range(0, ItemData.Length);
+            Debug.Log("Item ID: " + ItemData[randint].ID + " wird aufgehoben.");
+            holder.AddItemRequest(ItemData[randint].ID, amount, itemRarity);
 
             // Pickup entfernen
             GetComponent<NetworkObject>().Despawn();

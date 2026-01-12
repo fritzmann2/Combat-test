@@ -54,7 +54,7 @@ public class LevelManager : NetworkBehaviour
         // Es kann passieren, dass er disconnected, während wir warten.
         if (NetworkManager.Singleton.ConnectedClients.ContainsKey(clientId))
         {
-            Debug.Log($">>> Spawne jetzt Spieler für Client {clientId} <<<");
+//            Debug.Log($">>> Spawne jetzt Spieler für Client {clientId} <<<");
             SpawnPlayer(clientId);
         }
         else

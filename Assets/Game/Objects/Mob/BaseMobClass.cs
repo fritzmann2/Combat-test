@@ -41,7 +41,7 @@ abstract public class BaseEntety : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server)]
-    public void TakeDamageServerRpc(int damage)
+    public virtual void TakeDamageServerRpc(int damage)
     {
         Debug.Log("Mob took " + damage + " damage.");
         health.Value -= damage;

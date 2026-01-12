@@ -177,5 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickUp
   ShowTopMostFoldoutHeaderGroup: 1
-  PickUpRadius: 1
-  ItemData: {fileID: 11400000, guid: ea5d6a9c2601eda45a5c5f2adb0d1067, type: 2}
+  ItemData:
+  - {fileID: 11400000, guid: ea5d6a9c2601eda45a5c5f2adb0d1067, type: 2}
+  - {fileID: 11400000, guid: a89848a23d71510499d8d12f3e960967, type: 2}
+  amount: 1

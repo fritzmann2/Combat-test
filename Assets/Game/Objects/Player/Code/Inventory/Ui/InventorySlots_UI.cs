@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
+using UnityEngine.Events;
 
 public class InventorySlots_UI : MonoBehaviour
 {
     [SerializeField] private Image itemSprite;
     [SerializeField] private TextMeshProUGUI itemCount;
     [SerializeField] private InventorySlot assignedInventorySlot;
+    public static event UnityAction OnClear;
+
     private int index {get; set; }
 
     private Button button;
@@ -20,15 +22,12 @@ public class InventorySlots_UI : MonoBehaviour
         ClearSlot();
 
         ParentDisplay = transform.parent.GetComponent<InventoryDisplay>();
-        if (ParentDisplay == null) 
-        {
-            ParentDisplay = GetComponentInParent<InventoryParentLink>().inventoryDisplay;
-        }
 
         button = GetComponent<Button>();
         button?.onClick.AddListener(OnUISlotClick);
 
     }
+
 
     public virtual void Init(InventorySlot slot, int index)
     {
@@ -45,7 +44,6 @@ public class InventorySlots_UI : MonoBehaviour
         }
         if (slot.InventoryItemInstance == null)
         {
-//            Debug.Log("InventoryItemInstance ist null");
             ClearSlot();
             return;
         }
@@ -54,14 +52,13 @@ public class InventorySlots_UI : MonoBehaviour
             Debug.Log("InventoryItemData ist null");
         }
         
-//        Debug.Log("Update Slot");
         if (slot.InventoryItemInstance.itemData != null)
         {
+            Debug.Log("Try to update slot");
             itemSprite.sprite = slot.InventoryItemInstance.itemData.Icon;
             itemSprite.color = Color.white;
             if (slot.StackSize > 1) itemCount.text = slot.StackSize.ToString();
             else itemCount.text = "";
-//            Debug.Log("item slot set");
         }
 
         else
@@ -70,9 +67,14 @@ public class InventorySlots_UI : MonoBehaviour
         }
     }
 
-    public void UpdateUISlot()
+    public virtual void UpdateUISlot()
     {
-        if (assignedInventorySlot.InventoryItemInstance.itemData != null) UpdateUISlot(assignedInventorySlot);
+        if (assignedInventorySlot != null) 
+        {
+            OnClear.Invoke();
+            Debug.Log("UpdateUISlot called");
+            UpdateUISlot(assignedInventorySlot);
+        }
     }
 
     public void ClearSlot()
@@ -84,7 +86,7 @@ public class InventorySlots_UI : MonoBehaviour
     }
     public void OnUISlotClick()
     {
-        Debug.Log("UI Slot clicked");
+//        Debug.Log("UI Slot clicked");
         if( ParentDisplay == null) Debug.Log("ParentDisplay is null");
         ParentDisplay?.SlotClicked(this, index);
     }

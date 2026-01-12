@@ -11,8 +11,21 @@ public class MouseItemData : MonoBehaviour
     public InventorySlots_UI inventorySlot;
     private int indexslot;
     private bool hasitem = false;
-    public event UnityAction<int, int> ItemChange;
-    public event UnityAction<int, int> EquipRequest;
+    private bool eqfirst = false;
+    private bool eqsecond = false;
+    private bool invoke = false;
+    public event UnityAction<int, int, bool, bool> ItemChange;
+    private void OnEnable()
+    {
+        InventoryHolder.OnEquipmentChanged += HandleEquipmentChange;
+        InventorySlots_UI.OnClear += ClearSlot;
+    }
+
+    private void OnDisable()
+    {
+        InventoryHolder.OnEquipmentChanged -= HandleEquipmentChange;
+        InventorySlots_UI.OnClear -= ClearSlot;
+    }
 
     void Awake() 
     {
@@ -22,38 +35,61 @@ public class MouseItemData : MonoBehaviour
 
     public void clickedOnInventorySlot(InventorySlots_UI clickedSlot, int index)
     {
-        if (clickedSlot is EquipmentSlot eqSlot && hasitem)
+        if (hasitem)
         {
-            Debug.Log("Equip request sent");
-            EquipRequest?.Invoke(indexslot, index);
-            return;
+            invoke = true;
         }
-        if (clickedSlot.AssignedInventorySlot.InventoryItemInstance == null) 
+        if (clickedSlot is EquipmentSlot && hasitem)
         {
-            Debug.Log("Error Slot is empty");
-            return;
+            eqsecond = true;
         }
-        if (inventorySlot == null && clickedSlot.AssignedInventorySlot.InventoryItemInstance.itemData != null)
+        else if (!(clickedSlot is EquipmentSlot) && hasitem)
         {
-            Debug.Log("MouseItemData: Slot aufgenommen");
-            inventorySlot = clickedSlot;
-            indexslot = index;
-            ItemSprite.sprite = inventorySlot.AssignedInventorySlot.InventoryItemInstance.itemData.Icon;
-            itemCount.text = inventorySlot.AssignedInventorySlot.StackSize.ToString();
-            ItemSprite.color = Color.white;
+            eqsecond = false;
+        }
+        else if (clickedSlot is EquipmentSlot && !hasitem)
+        {
+            Setitem(clickedSlot, index);
+            eqfirst = true;
             hasitem = true;
-
         }
-        else
+        else if (!(clickedSlot is EquipmentSlot) && !hasitem)
         {
-            ItemChange?.Invoke(indexslot, index);
-            inventorySlot = null;
-            ItemSprite.sprite = null;
-            ItemSprite.color = Color.clear;
-            itemCount.text = null;
-            hasitem = false;
+            Setitem(clickedSlot, index);
+            eqfirst = false;
+            hasitem = true;
+        }
+        if (invoke)
+        {
+            ItemChange?.Invoke(indexslot, index, eqfirst, eqsecond);
+            return;
         }
     }
+
+
+    private void ClearSlot()
+    {
+        eqfirst = false;
+        eqsecond = false;
+        invoke = false;
+        inventorySlot = null;
+        ItemSprite.sprite = null;
+        ItemSprite.color = Color.clear;
+        itemCount.text = null;
+        hasitem = false;
+    }
+
+    private void Setitem(InventorySlots_UI slot, int index)
+    {
+        inventorySlot = slot;
+        indexslot = index;
+        
+        ItemSprite.sprite = inventorySlot.AssignedInventorySlot.InventoryItemInstance.itemData.Icon;
+        itemCount.text = inventorySlot.AssignedInventorySlot.StackSize.ToString();
+        ItemSprite.color = Color.white;
+        hasitem = true;
+    }
+    
     void Update()
     {
         if (inventorySlot != null)
@@ -75,5 +111,10 @@ public class MouseItemData : MonoBehaviour
             out pos);
         
         transform.localPosition = pos;
+    }
+    private void HandleEquipmentChange()
+    {
+//        Debug.Log("Equipment changed, clearing mouse item data");
+        ClearSlot();
     }
 }

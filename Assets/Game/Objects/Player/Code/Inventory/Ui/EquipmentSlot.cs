@@ -42,13 +42,24 @@ public class EquipmentSlot : InventorySlots_UI
         else
         {
             Debug.Log("Wrong item type for this equipment slot");
+            InventorySlot emptySlot = new InventorySlot(); 
+            base.Init(emptySlot, index);
         }
     }
 
     private void overide(InventorySlot slot, int index)
     {
+        Debug.Log("Equipment slot set");
+        
         base.Init(slot, index);
         trigerstatupdate();
+    }
+
+    public override void UpdateUISlot()
+    {
+        
+        base.UpdateUISlot();
+        //trigerstatupdate();
     }
 
     private void trigerstatupdate()
