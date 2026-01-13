@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq; // Wichtig für .FirstOrDefault()
+using System.Linq;
 
 public class PlayerStats : BaseMobClass
 {
     [Header("Verbindungen")]
     [SerializeField] private InventoryHolder inventoryHolder;
+    private PlayerSaveHandler playerSaveHandler;
 
     [Header("Debugging")]
     [SerializeField] private List<equipmentStatsSlot> equipmentStats = new List<equipmentStatsSlot>();
@@ -13,18 +14,9 @@ public class PlayerStats : BaseMobClass
     
     // Basis-Stats (Stats ohne Ausrüstung)
     [SerializeField] private playerstats baseStats = new playerstats(); 
+    private bool isCrit;
 
-    private void Start()
-    {
-        inventoryHolder = GetComponent<InventoryHolder>();
-        // Initial einmal alles berechnen
-        if(inventoryHolder != null)
-        {
-            // Wir hören auf das Event vom InventorySystem
-            inventoryHolder.EquipedSlots.OnInventorySlotChanged += HandleEquipmentChanged;
-        }
-        RecalculateTotalStats();
-    }
+
 
     public override void OnDestroy()
     {
@@ -34,10 +26,43 @@ public class PlayerStats : BaseMobClass
         }
     }
 
-    // Diese Methode wird automatisch aufgerufen, wenn das InventorySystem ein Event feuert
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        inventoryHolder = GetComponent<InventoryHolder>();
+        // Initial einmal alles berechnen
+        if(inventoryHolder != null)
+        {
+            // Wir hören auf das Event vom InventorySystem
+            inventoryHolder.EquipedSlots.OnInventorySlotChanged += HandleEquipmentChanged;
+        }
+        playerSaveHandler = GetComponent<PlayerSaveHandler>();        
+        playerSaveHandler.dataLoaded += Init;
+    }
+    public override void OnNetworkDespawn()
+    {
+        base.OnNetworkDespawn();
+        playerSaveHandler.dataLoaded -= Init;
+    }
+
+    private void Init()
+    {
+        if (inventoryHolder == null || inventoryHolder.EquipedSlots == null) 
+        {
+            Debug.LogWarning("PlayerStats: Init fehlgeschlagen - Kein InventoryHolder oder EquipedSlots gefunden.");
+            return;
+        }
+
+//        Debug.Log("PlayerStats: Initialisiere Stats aus Equipment...");
+
+        for (int i = 0; i < inventoryHolder.EquipedSlots.InventorySlots.Count; i++)
+        {
+            UpdateStatsFromEquipment(i);
+        }
+    }
+
     private void HandleEquipmentChanged(InventorySlot slot)
     {
-        // Wir müssen herausfinden, welchen Index dieser Slot hat
         int index = inventoryHolder.EquipedSlots.InventorySlots.IndexOf(slot);
         if (index != -1)
         {
@@ -77,8 +102,6 @@ public class PlayerStats : BaseMobClass
 
     private void RecalculateTotalStats()
     {
-        // WICHTIG: Erst alles auf die Basis-Werte zurücksetzen!
-        // Sonst addierst du bei jedem Update unendlich weiter.
         totalStats = new playerstats
         {
             strength = baseStats.strength,
@@ -86,13 +109,10 @@ public class PlayerStats : BaseMobClass
             critDamage = baseStats.critDamage,
             attackSpeed = baseStats.attackSpeed,
             weapondamage = baseStats.weapondamage,
-            // ... andere Stats hier kopieren
         };
 
-        // Jetzt alle Ausrüstungsgegenstände addieren
         foreach (var equipment in equipmentStats)
         {
-            // Sicherheitschecks: Ist da überhaupt ein Item drin?
             if (equipment.stats == null || equipment.stats.weaponstats == null) continue;
 
             totalStats.strength += equipment.stats.weaponstats.strength;
@@ -102,7 +122,7 @@ public class PlayerStats : BaseMobClass
             totalStats.weapondamage += equipment.stats.weaponstats.weapondamage;
         }
         
-        Debug.Log($"Stats updated. New Strength: {totalStats.strength}, Dmg: {totalStats.weapondamage}");
+//        Debug.Log($"Stats updated. New Strength: {totalStats.strength}, Dmg: {totalStats.weapondamage}");
     }
 
     // --- Kampf-Methoden ---
@@ -110,8 +130,8 @@ public class PlayerStats : BaseMobClass
     public void DealotherDamage(BaseEntety mob)
     {
         int damage = calculateDamage();
-        if (damage <= 0) damage = 1; 
-        mob.TakeDamage(damage);
+        if (damage <= 0) damage = 5; 
+        mob.TakeDamage(damage, isCrit);
     }
 
     public int calculateDamage()
@@ -121,7 +141,13 @@ public class PlayerStats : BaseMobClass
         if (getcrit() == 1)
         {
             multiplier += (totalStats.critDamage / 100f);
+            isCrit = true;
         }
+        else
+        {
+            isCrit = false;
+        }
+        multiplier *= (1+ totalStats.strength / 100f);
 
         float damage = totalStats.weapondamage * multiplier;
         

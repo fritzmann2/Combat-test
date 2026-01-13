@@ -19,7 +19,7 @@ abstract public class InventoryDisplay : MonoBehaviour
 
     protected virtual void UpdateSlot(InventorySlot updatedSlot)
     {
-        Debug.Log("InventoryDisplay: UpdateSlot called");
+//        Debug.Log("InventoryDisplay: UpdateSlot called");
         foreach (var slot in slotDictionary)
         {
             if (slot.Value == updatedSlot)

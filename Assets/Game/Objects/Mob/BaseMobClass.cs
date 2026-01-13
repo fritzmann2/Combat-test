@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 abstract public class BaseEntety : NetworkBehaviour
 {
@@ -11,12 +12,13 @@ abstract public class BaseEntety : NetworkBehaviour
 
     public int maxHealth;
     private BoxCollider2D bx;
+    private DamageTextManager damageTextManager;
 
     virtual public void Awake()
     {
         bx = GetComponent<BoxCollider2D>();
         health.OnValueChanged += OnHealthChanged;
-
+        damageTextManager = FindAnyObjectByType<DamageTextManager>();
         // Startwerte setzen (nur Server)
         if (IsServer)
         {
@@ -24,7 +26,7 @@ abstract public class BaseEntety : NetworkBehaviour
         }
     }
     // Schaden nehmen
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage, bool isCrit)
     {
         // 1. Check: Läuft das Netzwerk überhaupt schon?
         if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening)
@@ -37,22 +39,26 @@ abstract public class BaseEntety : NetworkBehaviour
         {
             Debug.LogWarning("Map-Objekt ist noch nicht gespawnt! (Warte auf Sync)");
         }
-        TakeDamageServerRpc((int)damage);
+        
+
+        TakeDamageServerRpc((int)damage, isCrit);
     }
 
     [Rpc(SendTo.Server)]
-    public virtual void TakeDamageServerRpc(int damage)
+    public virtual void TakeDamageServerRpc(int damage, bool isCrit)
     {
-        Debug.Log("Mob took " + damage + " damage.");
+//        Debug.Log("Mob took " + damage + " damage.");
+        damageTextManager.ShowDamageText(damage, transform.position, isCrit);
+        
         health.Value -= damage;
-        Debug.Log(health + " HP remains");
+//        Debug.Log(health + " HP remains");
     }
     //Todesabfrage
     virtual public void OnHealthChanged(float previousValue, float newValue)
     {
         if(newValue <= 0)
         {
-            Debug.Log("Mob is dead.");
+//            Debug.Log("Mob is dead.");
             if (this.tag == "mob")
             {
 //                Debug.LogError("Mob tries dieing");

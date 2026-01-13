@@ -6,8 +6,10 @@ using Unity.Netcode;
 public class Attackmanager : NetworkBehaviour
 {
     [Header("Setup")]
-    public GameObject weaponPrefabs; 
+    private GameObject weaponPrefab; 
+    public GameObject basicWeapon;
     public Transform handHolder;
+    private InventoryHolder inventoryHolder;
 
     [Header("Input")]
     private GameControls controls; 
@@ -20,7 +22,20 @@ public class Attackmanager : NetworkBehaviour
     {
         controls = new GameControls();
     }
+    void Start()
+    {
+        inventoryHolder = GetComponent<InventoryHolder>();
+        setWeapon();
+    }
+    private void OnEnable()
+    {
+        InventoryHolder.OnEquipmentChanged += setWeapon;
+    }
 
+    private void OnDisable()
+    {
+        InventoryHolder.OnEquipmentChanged += setWeapon;
+    }
     public override void OnNetworkSpawn()
     {
         if (IsOwner) controls.Enable();
@@ -35,7 +50,8 @@ public class Attackmanager : NetworkBehaviour
         if (!IsOwner) return;
         // Waffe ausrüsten/ablegen
         if (controls.Gameplay.SummonWeapon.triggered)
-        {
+        {   
+//            Debug.Log("Summoning or despawning weapon");
             bool shouldEquip = currentWeaponObject == null;
             EquipRequestServerRpc(shouldEquip ? 0 : -1); 
         }
@@ -77,7 +93,7 @@ public class Attackmanager : NetworkBehaviour
         if (weaponIndex >= 0)
         {
             //Waffe spawnen
-            GameObject newWeapon = Instantiate(weaponPrefabs, handHolder);
+            GameObject newWeapon = Instantiate(weaponPrefab, handHolder);
             var netObj = newWeapon.GetComponent<NetworkObject>();
             netObj.Spawn();
             netObj.TrySetParent(this.NetworkObject);
@@ -104,6 +120,19 @@ public class Attackmanager : NetworkBehaviour
             currentWeaponObject = weaponNetObj.gameObject;
             currentWeaponScript = weaponNetObj.GetComponent<Weapon>();
             currentWeaponScript.SetFollowTarget(this.handHolder);
+        }
+    }
+    public void setWeapon()
+    {
+        var weaponSlot = inventoryHolder.EquipedSlots.InventorySlots[4];
+
+        if (weaponSlot.InventoryItemInstance != null && weaponSlot.InventoryItemInstance.itemData != null)
+        {
+            weaponPrefab = weaponSlot.InventoryItemInstance.itemData.itemObject;
+        }
+        else
+        {
+            weaponPrefab = basicWeapon;
         }
     }
 

@@ -54,7 +54,7 @@ public class InventorySlots_UI : MonoBehaviour
         
         if (slot.InventoryItemInstance.itemData != null)
         {
-            Debug.Log("Try to update slot");
+//            Debug.Log("Try to update slot");
             itemSprite.sprite = slot.InventoryItemInstance.itemData.Icon;
             itemSprite.color = Color.white;
             if (slot.StackSize > 1) itemCount.text = slot.StackSize.ToString();
@@ -72,7 +72,7 @@ public class InventorySlots_UI : MonoBehaviour
         if (assignedInventorySlot != null) 
         {
             OnClear.Invoke();
-            Debug.Log("UpdateUISlot called");
+//            Debug.Log("UpdateUISlot called");
             UpdateUISlot(assignedInventorySlot);
         }
     }

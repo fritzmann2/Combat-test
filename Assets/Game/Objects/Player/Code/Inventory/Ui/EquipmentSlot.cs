@@ -13,7 +13,7 @@ public class EquipmentSlot : InventorySlots_UI
     {
         if (slot.InventoryItemInstance == null || slot.InventoryItemInstance.itemData == null)
         {
-            Debug.Log("Slot ist leer");
+//            Debug.Log("Slot ist leer");
             base.Init(slot, index); 
             return;
         }

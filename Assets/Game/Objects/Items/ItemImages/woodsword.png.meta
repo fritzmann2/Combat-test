@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: aa85d699a9b47e048b9e32ec1614c7e1
+guid: a6a634dbb2f08004ebeb05a37f1a1a0a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4164744761163438241
-    second: 20_0
+      213: -1067702374753216346
+    second: woodsword_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 800
+  spritePixelsToUnits: 80
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -152,23 +152,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 20_0
+      name: woodsword_0
       rect:
         serializedVersion: 2
-        x: 200
-        y: 10
-        width: 819
-        height: 257
+        x: 66
+        y: 61
+        width: 43
+        height: 11
       alignment: 9
       pivot: {x: 0.1, y: 0.5}
-      border: {x: 0, y: 0, z: 170, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1a8d0556b452cc930800000000000000
-      internalID: 4164744761163438241
+      spriteID: 6a85efad852ce21f0800000000000000
+      internalID: -1067702374753216346
       vertices: []
       indices: 
       edges: []
@@ -177,7 +177,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e75894bc7001ade42832f55300f268b6
+    spriteID: 88139ca880ada9e44904096225e29ff4
     internalID: 0
     vertices: []
     indices: 
@@ -187,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      20_0: 4164744761163438241
+      woodsword_0: -1067702374753216346
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

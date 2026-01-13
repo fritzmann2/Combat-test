@@ -24,7 +24,7 @@ public class ItemPickUp : NetworkBehaviour
         {   
             int itemRarity = 1;
             int randint = Random.Range(0, ItemData.Length);
-            Debug.Log("Item ID: " + ItemData[randint].ID + " wird aufgehoben.");
+//            Debug.Log("Item ID: " + ItemData[randint].ID + " wird aufgehoben.");
             holder.AddItemRequest(ItemData[randint].ID, amount, itemRarity);
 
             // Pickup entfernen

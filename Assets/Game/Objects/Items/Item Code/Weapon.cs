@@ -4,7 +4,8 @@ using Unity.Netcode;
 
 abstract public class Weapon : InventoryItem
 {
-    public Weaponstats weaponstats { get; set; }
+
+    [SerializeField] public Weaponstats weaponstats;
     public PlayerStats playerStats;
     public WeaponType Type { get; set; }
     public float attacktypemultiplier;
@@ -88,7 +89,7 @@ abstract public class Weapon : InventoryItem
         if (other.CompareTag("mob"))
         {
             playerStats.DealotherDamage(mob);
-            Debug.Log("Hit Mob");
+//            Debug.Log("Hit Mob");
         }
         
     }

@@ -17,13 +17,11 @@ public class MouseItemData : MonoBehaviour
     public event UnityAction<int, int, bool, bool> ItemChange;
     private void OnEnable()
     {
-        InventoryHolder.OnEquipmentChanged += HandleEquipmentChange;
         InventorySlots_UI.OnClear += ClearSlot;
     }
 
     private void OnDisable()
     {
-        InventoryHolder.OnEquipmentChanged -= HandleEquipmentChange;
         InventorySlots_UI.OnClear -= ClearSlot;
     }
 
@@ -111,10 +109,5 @@ public class MouseItemData : MonoBehaviour
             out pos);
         
         transform.localPosition = pos;
-    }
-    private void HandleEquipmentChange()
-    {
-//        Debug.Log("Equipment changed, clearing mouse item data");
-        ClearSlot();
     }
 }

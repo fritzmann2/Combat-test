@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using System.Linq;
 using System.IO;
-using UnityEditor.Overlays;
 
 
 #if UNITY_EDITOR
@@ -48,14 +47,14 @@ public class InventoryHolder : NetworkBehaviour
         {
             Debug.LogWarning("Keine StaticInventoryDisplays in der Scene gefunden!");
         }
-        if (IsServer) LoadInventory();
+        //if (IsServer) LoadInventory();
         mouseItemData = FindFirstObjectByType<MouseItemData>(FindObjectsInactive.Include);
         mouseItemData.ItemChange += MoveItem;
     }
     public override void OnNetworkDespawn()
     {
         // Speicher Inventar beim Disconnect (Server-seitig)
-        if (IsServer) SaveInventory();
+        //if (IsServer) SaveInventory();
         base.OnNetworkDespawn();
     }
     private void Awake()
@@ -110,7 +109,7 @@ public class InventoryHolder : NetworkBehaviour
 
         if (success)
         {
-            Debug.Log("Server: Item hinzugefügt.");
+//            Debug.Log("Server: Item hinzugefügt.");
             
             AddItemClientRpc(itemID, amount, newItemInstance.stats);
         }
@@ -195,24 +194,17 @@ public class InventoryHolder : NetworkBehaviour
         slot2.UpdateInventorySlot(tempItem, tempCount);   
         slot1.clearSlot();                                
     }
-
+    if (isSourceEq || isTargetEq)
+        {
+            OnEquipmentChanged?.Invoke();
+        }
     // 5. EVENTS FEUERN
     
     sourceSystem.OnInventorySlotChanged?.Invoke(slot1);
     targetSystem.OnInventorySlotChanged?.Invoke(slot2);
 }
     
-    // Save System
-    public void SaveInventory()
-    {
-        if (!IsServer) return;
-
-        InventorySaveData saveData = saveinventorySystem();        
-
-        string json = JsonUtility.ToJson(saveData, true);
-        File.WriteAllText(SavePath, json);
-        Debug.Log($"Inventar gespeichert in: {SavePath}");
-    }
+// Save Methode
     public InventorySaveData saveinventorySystem()
     {       
         InventorySaveData saveData = new InventorySaveData();
@@ -275,24 +267,8 @@ public class InventoryHolder : NetworkBehaviour
         return saveData;
     }
 
-    public void LoadInventory()
-    {
-        if (!IsServer || !File.Exists(SavePath)) return;
 
-        try 
-        {
-            string json = File.ReadAllText(SavePath);
-            InventorySaveData saveData = JsonUtility.FromJson<InventorySaveData>(json);
-            loadinventorySystem(saveData);
-//            Debug.Log("Inventar geladen.");
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("Fehler beim Laden: " + e.Message);
-        }
-    }
-
-    private void loadinventorySystem(InventorySaveData saveData)
+    public void loadinventorySystem(InventorySaveData saveData)
     {
         // --- Lade Hauptinventar ---
         foreach (var slotData in saveData.invslots)

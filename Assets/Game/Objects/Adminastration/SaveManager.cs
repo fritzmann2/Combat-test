@@ -8,7 +8,6 @@ public class SaveManager : NetworkBehaviour
 
     private void Awake()
     {
-        // Singleton Setup (etwas robuster für Clients)
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -18,55 +17,26 @@ public class SaveManager : NetworkBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Wird aufgerufen, wenn das Objekt zerstört wird (z.B. Server stoppt / Spiel beendet)
-    public override void OnNetworkDespawn()
+    public GameSaveData LoadPlayerData(string playerName)
     {
-        if (IsServer)
+        // ... (Dein Code Code bleibt gleich) ...
+        // (Ich kürze das hier ab, dein Code oben war korrekt)
+        string safeName = string.Join("_", playerName.Split(Path.GetInvalidFileNameChars()));
+        string fileName = $"save_{safeName}.json";
+        string path = Path.Combine(Application.persistentDataPath, fileName);
+
+        if (File.Exists(path))
         {
-            Debug.Log("Server fährt herunter. Speichere alle Spieler...");
-            SaveAllConnectedPlayers();
+            try { return JsonUtility.FromJson<GameSaveData>(File.ReadAllText(path)); }
+            catch { return null; }
         }
-        base.OnNetworkDespawn();
+        return null;
     }
 
-    // Alternativ: Wenn man das Fenster schließt
-    private void OnApplicationQuit()
+    // Diese Methode bleibt, damit PlayerSaveHandler sie aufrufen kann
+    public void SaveGameData(GameSaveData data)
     {
-        if (IsServer || (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer))
-        {
-            SaveAllConnectedPlayers();
-        }
-    }
-
-    [ContextMenu("Save All Manually")] // Zum Testen im Editor
-    public void SaveAllConnectedPlayers()
-    {
-        if (NetworkManager.Singleton == null) return;
-
-        // Wir iterieren durch alle verbundenen Clients
-        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
-        {
-            if (client.PlayerObject == null) continue;
-
-            // Wir suchen unser Handler-Script auf dem Player
-            PlayerSaveHandler playerHandler = client.PlayerObject.GetComponent<PlayerSaveHandler>();
-
-            if (playerHandler != null)
-            {
-                // Daten einsammeln
-                GameSaveData completeData = playerHandler.CollectAllData();
-                
-                // Speichern
-                WriteToFile(completeData);
-            }
-        }
-    }
-
-    private void WriteToFile(GameSaveData data)
-    {
-        // Dateinamen bereinigen, damit keine ungültigen Zeichen drin sind
         string safeName = string.Join("_", data.playerName.Split(Path.GetInvalidFileNameChars()));
-        
         string fileName = $"save_{safeName}.json";
         string path = Path.Combine(Application.persistentDataPath, fileName);
 
@@ -74,11 +44,11 @@ public class SaveManager : NetworkBehaviour
         {
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(path, json);
-            Debug.Log($"<color=green>Gespeichert:</color> {data.playerName} unter {path}");
+            Debug.Log($"<color=green>Gespeichert:</color> {data.playerName}");
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"Fehler beim Speichern von {data.playerName}: {e.Message}");
+            Debug.LogError($"Fehler beim Speichern: {e.Message}");
         }
     }
 }
