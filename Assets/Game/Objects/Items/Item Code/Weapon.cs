@@ -8,7 +8,7 @@ abstract public class Weapon : InventoryItem
     [SerializeField] public Weaponstats weaponstats;
     public PlayerStats playerStats;
     public WeaponType Type { get; set; }
-    public float attacktypemultiplier;
+    public float attackmulti = 1f;
     public Animator anim;
     public Collider2D bx;
     private AttackType attacktype;
@@ -82,13 +82,13 @@ abstract public class Weapon : InventoryItem
 
         if(other.CompareTag("Player"))
         {
-            playerStats.DealotherDamage(mob);
+            playerStats.DealotherDamage(mob, attackmulti);
             Debug.Log("Hit Player");
 
         }
         if (other.CompareTag("mob"))
         {
-            playerStats.DealotherDamage(mob);
+            playerStats.DealotherDamage(mob, attackmulti);
 //            Debug.Log("Hit Mob");
         }
         
@@ -138,23 +138,22 @@ public class Sword : Weapon
 {
     override public void Attack1()
     {
-        attacktypemultiplier = 1f;
+        attackmulti = 1f;
         performattack(AttackType.Slash);
     }
     override public void Attack2()
     {
-        attacktypemultiplier = 0.9f;
+        attackmulti = 0.9f;
         performattack(AttackType.Stab);
     }
     override public void Attack3()
     {
-        attacktypemultiplier = 2f;
+        attackmulti = 1.5f;
         performattack(AttackType.Charge);
     }
     override public void Attack4()
     {
-        attacktypemultiplier = 1f;
-        Debug.Log("Throw Attack");
+        attackmulti = 0.7f;
         performattack(AttackType.Throw);
     }
 
@@ -170,17 +169,14 @@ public class Bow : Weapon
 {
     override public void Attack1()
     {
-        attacktypemultiplier = 1f;
         performattack(AttackType.normal_shot);
     }
     override public void Attack2()
     {
-        attacktypemultiplier = 0.9f;
         performattack(AttackType.bow_uppercut);
     }
     override public void Attack3()
     {
-        attacktypemultiplier = 2f;
         performattack(AttackType.Charge);
     }
 
@@ -188,7 +184,5 @@ public class Bow : Weapon
     {
         Type = WeaponType.Bow;
         base.Awake();
-        //weapondamage = 8f;
-        //strength = 3f;
     }
 }

@@ -127,14 +127,14 @@ public class PlayerStats : BaseMobClass
 
     // --- Kampf-Methoden ---
 
-    public void DealotherDamage(BaseEntety mob)
+    public void DealotherDamage(BaseEntety mob, float attackmulti)
     {
-        int damage = calculateDamage();
+        int damage = calculateDamage(attackmulti);
         if (damage <= 0) damage = 5; 
         mob.TakeDamage(damage, isCrit);
     }
 
-    public int calculateDamage()
+    public int calculateDamage(float attackmulti)
     {
         
         float multiplier = 1f;
@@ -149,7 +149,7 @@ public class PlayerStats : BaseMobClass
         }
         multiplier *= (1+ totalStats.strength / 100f);
 
-        float damage = totalStats.weapondamage * multiplier;
+        float damage = totalStats.weapondamage * multiplier * attackmulti;
         
 
         return Mathf.RoundToInt(damage);
