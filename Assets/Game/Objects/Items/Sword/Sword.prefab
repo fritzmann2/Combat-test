@@ -141,7 +141,7 @@ MonoBehaviour:
     critDamage: 0
     attackSpeed: 0
   playerStats: {fileID: 0}
-  attacktypemultiplier: 0
+  attackmulti: 1
   anim: {fileID: 0}
   bx: {fileID: 0}
   animOffset: {x: 0, y: 0, z: 0}
